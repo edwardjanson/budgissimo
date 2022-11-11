@@ -12,5 +12,5 @@ class Budget:
     def update_daily_budget(self, budget):
         self.daily_budget = budget
 
-    def update_amount_budget(self, amount):
+    def update_amount_spent(self, amount):
         self.amount_spent = amount
