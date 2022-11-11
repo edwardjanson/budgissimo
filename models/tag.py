@@ -9,9 +9,6 @@ class Tag:
     def update_budget(self, budget):
         self.budget = budget
 
-    def update_amount_spent(self, amount_spent):
-        self.amount_spent = amount_spent
-
     def add_campaign(self, tag):
         self.campaigns.append(tag)
     
