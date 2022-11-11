@@ -1,19 +1,19 @@
 class Campaign:
 
-    def __init__(self, name, budget, campaign_tags=[], id=None):
+    def __init__(self, name, budget, tags=[], id=None):
         self.name = name
         self.budget = budget
-        self.campaign_tags = campaign_tags
+        self.tags = tags
         self.id = id
     
     def update_budget(self, budget):
         self.budget = budget
 
-    def add_campaign_tags(self, tag):
-        self.campaign_tags.append(tag)
+    def add_tags(self, tag):
+        self.tags.append(tag)
     
-    def remove_campaign_tag(self, tag):
-        self.campaign_tags.remove(tag)
+    def remove_tag(self, tag):
+        self.tags.remove(tag)
     
-    def clear_campaign_tags(self):
-        self.campaign_tags.clear()
+    def clear_tags(self):
+        self.tags.clear()
