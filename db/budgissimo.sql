@@ -13,8 +13,8 @@ CREATE accounts (
 
 CREATE budgets (
     id SERIAL PRIMARY KEY,
-    monthly_budget FLOAT NOT NULL,
-    daily_budget FLOAT NOT NULL,
+    monthly_budget FLOAT,
+    daily_budget FLOAT,
     amount_spent FLOAT,
     currency_id SERIAL NOT NULL REFERENCES currency(id)
 )
@@ -23,25 +23,25 @@ CREATE currency (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     symbol VARCHAR(1) NOT NULL,
-    symbol_location VARCHAR(5)
+    symbol_location VARCHAR(5) NOT NULL
 )
 
 CREATE platforms (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255),
+  name VARCHAR(255) NOT NULL,
   account_id SERIAL NOT NULL REFERENCES accounts(id),
   budget_id SERIAL NOT NULL REFERENCES budgets(id)
 )
 
 CREATE tags (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255),
+  name VARCHAR(255) NOT NULL,
   budget_id SERIAL NOT NULL REFERENCES budgets(id)
 )
 
 CREATE campaigns (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255),
+  name VARCHAR(255) NOT NULL,
   platform_id SERIAL NOT NULL REFERENCES platforms(id),
   budget_id SERIAL NOT NULL REFERENCES budgets(id)
 )
