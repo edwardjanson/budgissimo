@@ -18,12 +18,11 @@ class Tag:
     def clear_campaigns(self):
         self.campaigns.clear()
     
-    def update_set_monthly_budget(self, budget):
-        self.budget.set_monthly_budget = budget
+    def update_monthly_budget(self, budget):
+        self.budget.monthly_budget = budget
 
-    def update_set_daily_budget(self, budget):
-        self.budget.set_daily_budget = budget
+    def update_daily_budget(self, budget):
+        self.budget.daily_budget = budget
     
     def get_campaigns(self):
         return self.campaigns
-
