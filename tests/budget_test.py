@@ -7,13 +7,13 @@ class TestBudget(unittest.TestCase):
     def setUp(self):
         self.budget_1 = Budget(500.00, 17.00, 30.00)
     
-    def budget_has_a_monthly_budget(self):
+    def test_budget_has_a_monthly_budget(self):
         self.assertEqual(500.00, self.budget_1.monthly_budget)
     
-    def budget_has_a_daily_budget(self):
+    def test_budget_has_a_daily_budget(self):
         self.assertEqual(17.00, self.budget_1.daily_budget)
 
-    def budget_has_an_amount_spent(self):
+    def test_budget_has_an_amount_spent(self):
         self.assertEqual(30.00, self.budget_1.amount_spent)
     
     def test_updating_monthly_budget(self):

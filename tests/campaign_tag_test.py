@@ -14,8 +14,8 @@ class TestCampaignTag(unittest.TestCase):
         self.campaign_1 = Campaign("Test campaign", self.budget_2)
         self.campaign_tag_1 = CampaignTag(self.campaign_1, self.tag_1)
     
-    def campaign_tag_has_tag(self):
+    def test_campaign_tag_has_tag(self):
         self.assertEqual("Test tag", self.campaign_tag_1.tag.name)
 
-    def campaign_tag_has_campaign(self):
+    def test_campaign_tag_has_campaign(self):
         self.assertEqual("Test campaign", self.campaign_tag_1.campaign.name)

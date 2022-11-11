@@ -11,7 +11,7 @@ class TestAccount(unittest.TestCase):
         self.currency_1 = Currency("British Pounds", "£", "left")
         self.account_1 = Account(self.budget_1, self.currency_1)
     
-    def account_has_a_budget(self):
+    def test_account_has_a_budget(self):
         self.assertEqual(500.00, self.account_1.budget.monthly_budget)
     
     def test_updating_the_budget(self):

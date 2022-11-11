@@ -9,10 +9,10 @@ class TestTag(unittest.TestCase):
         self.budget_1 = Budget(500.00, 17.00, 30.00)
         self.tag_1 = Tag("Test tag", self.budget_1)
     
-    def campaign_has_name(self):
+    def test_campaign_has_name(self):
         self.assertEqual("Test tag", self.tag_1.name)
     
-    def campaign_has_a_budget(self):
+    def test_campaign_has_a_budget(self):
         self.assertEqual(500.00, self.tag_1.budget.monthly_budget)
 
     def test_updating_the_name(self):
