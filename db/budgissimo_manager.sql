@@ -16,7 +16,6 @@ CREATE TABLE currencies (
 CREATE TABLE budgets (
     id SERIAL PRIMARY KEY,
     monthly_budget FLOAT,
-    daily_budget FLOAT,
     amount_spent FLOAT
 );
 

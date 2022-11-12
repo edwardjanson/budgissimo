@@ -9,7 +9,7 @@ class TestPlatform(unittest.TestCase):
     
     def setUp(self):
         self.currency_1 = Currency("British Pounds", "£", "left")
-        self.budget_1 = Budget(500.00, 17.00, 30.00)
+        self.budget_1 = Budget(500.00, 30.00)
         self.account_1 = Account(self.budget_1, self.currency_1)
         self.platform_1 = Platform("Test platform", self.budget_1, self.account_1)
     
@@ -27,6 +27,6 @@ class TestPlatform(unittest.TestCase):
         self.assertEqual("New test", self.platform_1.name)
     
     def test_updating_the_platform_budget(self):
-        budget_2 = Budget(525.00, 17.00, 30.00)
+        budget_2 = Budget(525.00, 30.00)
         self.platform_1.update_budget(budget_2)
         self.assertEqual(525.00, self.platform_1.budget.monthly_budget)

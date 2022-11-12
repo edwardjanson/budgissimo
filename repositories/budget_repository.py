@@ -4,7 +4,7 @@ from models.budget import Budget
 
 
 def save(budget):
-    sql = "INSERT INTO budgets (monthly_budget, daily_budget, amount_spent) VALUES (%s, %s, %s) RETURNING *"
+    sql = "INSERT INTO budgets (monthly_budget, amount_spent) VALUES (%s, %s) RETURNING *"
     values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent]
     results = run_sql(sql, values)
     id = results[0]['id']
@@ -19,7 +19,7 @@ def select_all():
     results = run_sql(sql)
 
     for row in results:
-        budget = Budget(row['monthly_budget'], row['daily_budget'], row['amount_spent'], row['id'])
+        budget = Budget(row['monthly_budget'], row['amount_spent'], row['id'])
         budgets.append(budget)
     return budgets
 
@@ -31,7 +31,7 @@ def select(id):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        budget = Budget(result['monthly_budget'], result['daily_budget'], result['amount_spent'], result['id'])
+        budget = Budget(result['monthly_budget'], result['amount_spent'], result['id'])
     return budget
 
 
@@ -47,6 +47,6 @@ def delete(id):
 
 
 def update(budget):
-    sql = "UPDATE budgets SET (monthly_budget, daily_budget, amount_spent) = (%s, %s, %s) WHERE id = %s"
-    values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent, budget.id]
+    sql = "UPDATE budgets SET (monthly_budget, amount_spent) = (%s, %s) WHERE id = %s"
+    values = [budget.monthly_budget, budget.amount_spent, budget.id]
     run_sql(sql, values)

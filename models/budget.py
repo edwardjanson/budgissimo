@@ -3,17 +3,14 @@ from datetime import datetime
 
 class Budget:
 
-    def __init__(self, monthly_budget, daily_budget=None, amount_spent=0.00, id=None):
+    def __init__(self, monthly_budget, amount_spent=0.00, id=None):
         self.monthly_budget = monthly_budget
-        self.daily_budget = self.calculated_daily_budget() if daily_budget is None else daily_budget
+        self.daily_budget = self.calculated_daily_budget()
         self.amount_spent = amount_spent
         self.id = id
     
     def update_monthly_budget(self, budget):
         self.monthly_budget = budget
-
-    def update_daily_budget(self, budget):
-        self.daily_budget = budget
 
     def update_amount_spent(self, amount):
         self.amount_spent = amount
@@ -26,5 +23,5 @@ class Budget:
         hours_left_in_day = 24 - hour
         hours_left_in_month = 24 * days_left_in_month + hours_left_in_day
 
-        daily_budget = round(self.monthly_budget / (hours_left_in_month / days_left_in_month + 1), 2)
+        daily_budget = round(self.monthly_budget / (hours_left_in_month / 24), 2)
         return daily_budget
