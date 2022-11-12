@@ -2,6 +2,7 @@ from db.run_sql import run_sql
 
 from models.account import Account
 import repositories.budget_repository as budget_repository
+import repositories.currency_repository as currency_repository
 
 
 def save(account):
@@ -21,7 +22,7 @@ def select_all():
 
     for row in results:
         budget = budget_repository.select(row['budget_id'])
-        currency = budget_repository.select(row['currency_id'])
+        currency = currency_repository.select(row['currency_id'])
         account = Account(budget, currency, row['id'])
         accounts.append(account)
     return accounts
@@ -35,7 +36,7 @@ def select(id):
 
     if result is not None:
         budget = budget_repository.select(result['budget_id'])
-        currency = budget_repository.select(result['currency_id'])
+        currency = currency_repository.select(result['currency_id'])
         account = Account(budget, currency, result['id'])
     return account
 
