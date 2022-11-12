@@ -1,6 +1,6 @@
 class Budget:
 
-    def __init__(self, monthly_budget, daily_budget, amount_spent, id=None):
+    def __init__(self, monthly_budget, daily_budget, amount_spent=0.00, id=None):
         self.monthly_budget = monthly_budget
         self.daily_budget = daily_budget
         self.amount_spent = amount_spent

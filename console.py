@@ -29,7 +29,26 @@ currency_repository.delete_all()
 # Currencies
 british_pound = Currency("British Pound", "£")
 euro = Currency("Euro", "€")
+us_dollar = Currency("US Dollar", "$")
 
+# Account
+account_budget = Budget(10000.00, 322.00)
+account = Account(account_budget, british_pound)
+
+# Platforms
+google_ads_budget = Budget(5000.00, 15.00)
+google_ads = Platform("Google Ads", google_ads_budget, account)
+
+facebook_ads_budget = Budget(2000.00, 64.00)
+facebook_ads = Platform("Facebook Ads", facebook_ads_budget, account)
+
+instagram_ads_budget = Budget(2500.00, 80.00)
+instagram_ads = Platform("Instagram Ads", instagram_ads_budget, account)
+
+linkedin_ads_budget = Budget(1500.00, 48.00)
+linkedin_ads = Platform("LinkedIn Ads", linkedin_ads_budget, account)
+
+# Campaigns 
 
 
 
