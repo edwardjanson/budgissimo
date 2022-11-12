@@ -1,8 +1,9 @@
 class Tag:
 
-    def __init__(self, name, budget, id=None):
+    def __init__(self, name, budget, account, id=None):
         self.name = name
         self.budget = budget
+        self.account = account
         self.id = id
 
     def update_name(self, name):
