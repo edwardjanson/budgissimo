@@ -54,5 +54,19 @@ def delete(id):
 
 def update(platform):
     sql = "UPDATE platforms SET (name, budget_id, account_id) = (%s, %s, %s) WHERE id = %s"
-    values = [platform.name, platform.budget.id, platform.account, platform.id]
+    values = [platform.name, platform.budget.id, platform.account.id, platform.id]
     run_sql(sql, values)
+
+
+def select_all_by_account(account):
+    platforms = []
+
+    sql = "SELECT platforms_id FROM campaigns_tags WHERE account_id = %s"
+    values = [account.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        platform = select(result["platform_id"])
+        platforms.append(platform)
+    
+    return platforms

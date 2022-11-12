@@ -55,19 +55,5 @@ def delete(id):
 
 def update(tag):
     sql = "UPDATE tags SET (name, budget_id, account_id) = (%s, %s, %s) WHERE id = %s"
-    values = [tag.name, tag.budget.id, tag.account, tag.id]
+    values = [tag.name, tag.budget.id, tag.account.id, tag.id]
     run_sql(sql, values)
-
-
-def get_campaigns(tag):
-    campaigns = []
-
-    sql = "SELECT campaign_id FROM campaigns_tags WHERE tag_id = %s"
-    values = [tag.id]
-    results = run_sql(sql, values)
-
-    for result in results:
-        campaign = campaign_repository.select(result["campaign_id"])
-        campaigns.append(campaign)
-    
-    return campaigns
