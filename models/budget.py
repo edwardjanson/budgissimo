@@ -26,5 +26,5 @@ class Budget:
         hours_left_in_day = 24 - hour
         hours_left_in_month = 24 * days_left_in_month + hours_left_in_day
 
-        daily_budget = self.monthly_budget / (hours_left_in_month / days_left_in_month + 1)
+        daily_budget = round(self.monthly_budget / (hours_left_in_month / days_left_in_month + 1), 2)
         return daily_budget

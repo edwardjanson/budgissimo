@@ -48,8 +48,6 @@ instagram_ads = Platform("Instagram Ads", instagram_ads_budget, account)
 linkedin_ads_budget = Budget(1500.00, 48.00)
 linkedin_ads = Platform("LinkedIn Ads", linkedin_ads_budget, account)
 
-# Campaigns 
-
 
 
 pdb.set_trace()
