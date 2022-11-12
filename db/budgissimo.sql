@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS campaigns_tags;
 
 CREATE accounts (
     id SERIAL PRIMARY KEY,
+    budget_id SERIAL NOT NULL REFERENCES budget(id),
     currency_id SERIAL NOT NULL REFERENCES currency(id)
 )
 
