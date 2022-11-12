@@ -3,6 +3,7 @@ from db.run_sql import run_sql
 from models.tag import Tag
 import repositories.budget_repository as budget_repository
 import repositories.account_repository as account_repository
+import repositories.campaign_repository as campaign_repository
 
 
 def save(tag):
@@ -22,7 +23,7 @@ def select_all():
 
     for row in results:
         budget = budget_repository.select(row['budget_id'])
-        account = account_repository.select(row['currency_id'])
+        account = account_repository.select(row['account_id'])
         tag = Tag(row['name'], budget, account, row['id'])
         tags.append(tag)
     return tags
@@ -36,7 +37,7 @@ def select(id):
 
     if result is not None:
         budget = budget_repository.select(result['budget_id'])
-        account = account_repository.select(result['currency_id'])
+        account = account_repository.select(result['account_id'])
         tag = Tag(result['name'], budget, account, result['id'])
     return tag
 
@@ -56,3 +57,17 @@ def update(tag):
     sql = "UPDATE tags SET (name, budget_id, account_id) = (%s, %s, %s) WHERE id = %s"
     values = [tag.name, tag.budget.id, tag.account, tag.id]
     run_sql(sql, values)
+
+
+def get_campaigns(tag):
+    campaigns = []
+
+    sql = "SELECT campaign_id FROM campaigns_tags WHERE tag_id = %s"
+    values = [tag.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        campaign = campaign_repository.select(result["campaign_id"])
+        campaigns.append(campaign)
+    
+    return campaigns

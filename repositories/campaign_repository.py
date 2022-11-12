@@ -22,7 +22,7 @@ def select_all():
 
     for row in results:
         budget = budget_repository.select(row['budget_id'])
-        platform = platform_repository.select(row['currency_id'])
+        platform = platform_repository.select(row['platform_id'])
         campaign = Campaign(row['name'], budget, platform, row['id'])
         campaigns.append(campaign)
     return campaigns
@@ -36,7 +36,7 @@ def select(id):
 
     if result is not None:
         budget = budget_repository.select(result['budget_id'])
-        platform = platform_repository.select(result['currency_id'])
+        platform = platform_repository.select(result['platform_id'])
         campaign = Campaign(result['name'], budget, platform, result['id'])
     return campaign
 
