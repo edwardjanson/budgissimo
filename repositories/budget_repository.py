@@ -5,7 +5,7 @@ from models.budget import Budget
 
 def save(budget):
     sql = "INSERT INTO budgets (monthly_budget, amount_spent) VALUES (%s, %s) RETURNING *"
-    values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent]
+    values = [budget.monthly_budget, budget.amount_spent]
     results = run_sql(sql, values)
     id = results[0]['id']
     budget.id = id
