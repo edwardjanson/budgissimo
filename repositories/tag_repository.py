@@ -7,7 +7,7 @@ import repositories.account_repository as account_repository
 
 def save(tag):
     sql = "INSERT INTO tags (name, budget_id, account_id) VALUES (%s, %s, %s) RETURNING *"
-    values = [tag.name, tag.budget.id, tag.account]
+    values = [tag.name, tag.budget.id, tag.account.id]
     results = run_sql(sql, values)
     id = results[0]['id']
     tag.id = id

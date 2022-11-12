@@ -7,7 +7,7 @@ import repositories.platform_repository as platform_repository
 
 def save(campaign):
     sql = "INSERT INTO campaigns (name, budget_id, platform_id) VALUES (%s, %s, %s) RETURNING *"
-    values = [campaign.name, campaign.budget.id, campaign.platform]
+    values = [campaign.name, campaign.budget.id, campaign.platform.id]
     results = run_sql(sql, values)
     id = results[0]['id']
     campaign.id = id

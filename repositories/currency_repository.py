@@ -4,7 +4,7 @@ from models.currency import Currency
 
 
 def save(currency):
-    sql = "INSERT INTO currencies (name, symbol, symbol_location) VALUES (%s, %s) RETURNING *"
+    sql = "INSERT INTO currencies (name, symbol) VALUES (%s, %s) RETURNING *"
     values = [currency.name, currency.symbol]
     results = run_sql(sql, values)
     id = results[0]['id']

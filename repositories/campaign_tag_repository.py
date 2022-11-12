@@ -5,54 +5,54 @@ import repositories.campaign_repository as campaign_repository
 import repositories.tag_repository as tag_repository
 
 
-def save(account):
-    sql = "INSERT INTO accounts (campaign_id, tag_id) VALUES (%s, %s) RETURNING *"
-    values = [account.campaign.id, account.tag.id]
+def save(campaign_tag):
+    sql = "INSERT INTO campaigns_tags (campaign_id, tag_id) VALUES (%s, %s) RETURNING *"
+    values = [campaign_tag.campaign.id, campaign_tag.tag.id]
     results = run_sql(sql, values)
     id = results[0]['id']
-    account.id = id
-    return account
+    campaign_tag.id = id
+    return campaign_tag
 
 
 def select_all():
-    accounts = []
+    campaigns_tags = []
 
-    sql = "SELECT * FROM accounts"
+    sql = "SELECT * FROM campaigns_tags"
     results = run_sql(sql)
 
     for row in results:
         campaign = campaign_repository.select(row['campaign_id'])
         tag = tag_repository.select(row['tag_id'])
-        account = CampaignTag(campaign, tag, row['id'])
-        accounts.append(account)
-    return accounts
+        campaign_tag = CampaignTag(campaign, tag, row['id'])
+        campaigns_tags.append(campaign_tag)
+    return campaigns_tags
 
 
 def select(id):
-    account = None
-    sql = "SELECT * FROM accounts WHERE id = %s"
+    campaign_tag = None
+    sql = "SELECT * FROM campaigns_tags WHERE id = %s"
     values = [id]
     result = run_sql(sql, values)[0]
 
     if result is not None:
         campaign = campaign_repository.select(result['campaign_id'])
         tag = tag_repository.select(result['tag_id'])
-        account = CampaignTag(campaign, tag, result['id'])
-    return account
+        campaign_tag = CampaignTag(campaign, tag, result['id'])
+    return campaign_tag
 
 
 def delete_all():
-    sql = "DELETE FROM accounts"
+    sql = "DELETE FROM campaigns_tags"
     run_sql(sql)
 
 
 def delete(id):
-    sql = "DELETE FROM accounts WHERE id = %s"
+    sql = "DELETE FROM campaigns_tags WHERE id = %s"
     values = [id]
     run_sql(sql, values)
 
 
-def update(account):
-    sql = "UPDATE accounts SET (campaign_id, tag_id) = (%s, %s) WHERE id = %s"
-    values = [account.campaign.id, account.tag.id, account.id]
+def update(campaign_tag):
+    sql = "UPDATE campaigns_tags SET (campaign_id, tag_id) = (%s, %s) WHERE id = %s"
+    values = [campaign_tag.campaign.id, campaign_tag.tag.id, campaign_tag.id]
     run_sql(sql, values)
