@@ -1,52 +1,52 @@
 from db.run_sql import run_sql
 
-from models.currency import Currency
+from models.budget import Budget
 
 
-def save(currency):
-    sql = "INSERT INTO currencies (name, symbol, symbol_location) VALUES (%s, %s, %s) RETURNING *"
-    values = [currency.name, currency.symbol, currency.symbol_location]
+def save(budget):
+    sql = "INSERT INTO budgets (monthly_budget, daily_budget, amount_spent) VALUES (%s, %s, %s) RETURNING *"
+    values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent]
     results = run_sql(sql, values)
     id = results[0]['id']
-    currency.id = id
-    return currency
+    budget.id = id
+    return budget
 
 
 def select_all():
-    currencies = []
+    budgets = []
 
-    sql = "SELECT * FROM currencies"
+    sql = "SELECT * FROM budgets"
     results = run_sql(sql)
 
     for row in results:
-        currency = Currency(row['name'], row['symbol'], row['symbol_location'], row['id'])
-        currencies.append(currency)
-    return currencies
+        budget = Budget(row['monthly_budget'], row['daily_budget'], row['amount_spent'], row['id'])
+        budgets.append(budget)
+    return budgets
 
 
 def select(id):
-    currency = None
-    sql = "SELECT * FROM currencies WHERE id = %s"
+    budget = None
+    sql = "SELECT * FROM budgets WHERE id = %s"
     values = [id]
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        currency = Currency(result['name'], result['symbol'], result['symbol_location'], result['id'])
-    return currency
+        budget = Budget(result['monthly_budget'], result['daily_budget'], result['amount_spent'], result['id'])
+    return budget
 
 
 def delete_all():
-    sql = "DELETE FROM currencies"
+    sql = "DELETE FROM budgets"
     run_sql(sql)
 
 
 def delete(id):
-    sql = "DELETE FROM currencies WHERE id = %s"
+    sql = "DELETE FROM budgets WHERE id = %s"
     values = [id]
     run_sql(sql, values)
 
 
-def update(currency):
-    sql = "UPDATE currencies SET (name, symbol, symbol_location) = (%s, %s, %s) WHERE id = %s"
-    values = [currency.name, currency.symbol, currency.symbol_location]
+def update(budget):
+    sql = "UPDATE budgets SET (monthly_budget, daily_budget, amount_spent) = (%s, %s, %s) WHERE id = %s"
+    values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent]
     run_sql(sql, values)
