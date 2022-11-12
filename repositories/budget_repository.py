@@ -48,5 +48,5 @@ def delete(id):
 
 def update(budget):
     sql = "UPDATE budgets SET (monthly_budget, daily_budget, amount_spent) = (%s, %s, %s) WHERE id = %s"
-    values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent]
+    values = [budget.monthly_budget, budget.daily_budget, budget.amount_spent, budget.id]
     run_sql(sql, values)

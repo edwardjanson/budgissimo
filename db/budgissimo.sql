@@ -23,8 +23,7 @@ CREATE budgets (
 CREATE currency (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    symbol VARCHAR(1) NOT NULL,
-    symbol_location VARCHAR(5) NOT NULL
+    symbol VARCHAR(1) NOT NULL
 )
 
 CREATE platforms (

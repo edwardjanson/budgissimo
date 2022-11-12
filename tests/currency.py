@@ -12,6 +12,3 @@ class TestCurrency(unittest.TestCase):
 
     def test_currency_has_symbol(self):
         self.assertEqual("£", self.currency_1.symbol)
-
-    def currency_has_symbol_location(self):
-        self.assertEqual("left", self.currency_1.symbol_location)

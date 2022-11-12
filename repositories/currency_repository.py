@@ -4,8 +4,8 @@ from models.currency import Currency
 
 
 def save(currency):
-    sql = "INSERT INTO currencies (name, symbol, symbol_location) VALUES (%s, %s, %s) RETURNING *"
-    values = [currency.name, currency.symbol, currency.symbol_location]
+    sql = "INSERT INTO currencies (name, symbol, symbol_location) VALUES (%s, %s) RETURNING *"
+    values = [currency.name, currency.symbol]
     results = run_sql(sql, values)
     id = results[0]['id']
     currency.id = id
@@ -19,7 +19,7 @@ def select_all():
     results = run_sql(sql)
 
     for row in results:
-        currency = Currency(row['name'], row['symbol'], row['symbol_location'], row['id'])
+        currency = Currency(row['name'], row['symbol'], row['id'])
         currencies.append(currency)
     return currencies
 
@@ -31,7 +31,7 @@ def select(id):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        currency = Currency(result['name'], result['symbol'], result['symbol_location'], result['id'])
+        currency = Currency(result['name'], result['symbol'], result['id'])
     return currency
 
 
@@ -47,6 +47,6 @@ def delete(id):
 
 
 def update(currency):
-    sql = "UPDATE currencies SET (name, symbol, symbol_location) = (%s, %s, %s) WHERE id = %s"
-    values = [currency.name, currency.symbol, currency.symbol_location]
+    sql = "UPDATE currencies SET (name, symbol) = (%s, %s) WHERE id = %s"
+    values = [currency.name, currency.symbol, currency.id]
     run_sql(sql, values)
