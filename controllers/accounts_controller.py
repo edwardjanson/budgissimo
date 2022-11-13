@@ -30,7 +30,7 @@ def update_account():
 
     updated_currency = currency_repository.select(currency_id)
     account = account_repository.select(1)
-    updated_budget = Budget(monthly_budget, amount_spent, account.budget.id)
+    updated_budget = Budget(monthly_budget, amount_spent, account.budget.id) # type: ignore
     budget_repository.update(updated_budget)
     updated_account = Account(updated_budget, updated_currency)
     account_repository.update(updated_account)

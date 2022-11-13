@@ -61,12 +61,12 @@ def update(platform):
 def select_all_by_account(account):
     platforms = []
 
-    sql = "SELECT platforms_id FROM campaigns_tags WHERE account_id = %s"
+    sql = "SELECT id FROM platforms WHERE account_id = %s"
     values = [account.id]
     results = run_sql(sql, values)
 
     for result in results:
-        platform = select(result["platform_id"])
+        platform = select(result["id"])
         platforms.append(platform)
     
     return platforms

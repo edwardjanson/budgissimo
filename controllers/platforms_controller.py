@@ -8,7 +8,7 @@ from models.budget import Budget
 
 platforms_blueprint = Blueprint("platforms", __name__)
 
-# INDEX
+
 @platforms_blueprint.route("/platforms")
 def platforms():
     account = account_repository.select(1)
@@ -16,13 +16,11 @@ def platforms():
     return render_template("platforms/index.html", platforms=platforms)
 
 
-# NEW
 @platforms_blueprint.route("/platforms/new")
 def new_platform():
     return render_template("platforms/new.html")
 
 
-# CREATE
 @platforms_blueprint.route("/platforms/new", methods=["POST"])
 def create_platform():
     platform_name = request.form["platform_name"]
@@ -36,14 +34,12 @@ def create_platform():
     return redirect("/platforms")
 
 
-# EDIT
 @platforms_blueprint.route("/platforms/<id>/edit")
 def edit_platform(id):
     platform = platform_repository.select(id)
     return render_template('platforms/edit.html', platform=platform)
 
 
-# UPDATE
 @platforms_blueprint.route("/platforms/<id>", methods=["POST"])
 def update_platform(id):
     platform_name = request.form["platform_name"]
@@ -51,7 +47,7 @@ def update_platform(id):
     amount_spent = request.form["amount_spent"]
 
     platform = platform_repository.select(id)
-    updated_budget = Budget(monthly_budget, amount_spent, platform.budget.id)
+    updated_budget = Budget(monthly_budget, amount_spent, platform.budget.id) # type: ignore
     budget_repository.update(updated_budget)
     updated_platform = Platform(platform_name, updated_budget, id)
     platform_repository.update(updated_platform)
@@ -59,7 +55,6 @@ def update_platform(id):
     return redirect("/platforms")
 
 
-# DELETE
 @platforms_blueprint.route("/platforms/<id>/delete", methods=["POST"])
 def delete_platform(id):
     platform_repository.delete(id)
