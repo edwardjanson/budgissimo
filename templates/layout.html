@@ -20,21 +20,20 @@
         <title>{% block title %}{% endblock %} | Budgissimo</title>
 
     </head>
-<body>
-    <header>
-        <span id="logo">BUDGISSIMO</span>
-        <nav>
-            <ul id="menu">
-              <li><a href="/">home</a></li>
-              <li><a href="/account/">account</a></li>
-              <li><a href="/platforms/">platforms</a></li>
-              <li><a href="/tags/">tags</a></li>
-            </ul>
-        </nav>
-    </header>
-    {% block main %}{% endblock %}
-    <footer>
-        Budgissimo | Developed by <a href="https://github.com/edwardjanson" target="_blank">Edward Janson</a>
-    </footer>
-</body>
+    <body>
+        <header>
+            <span id="logo"><a href="/">BUDGISSIMO</a></span>
+            <nav>
+                <ul id="menu">
+                <li><a href="/account/">account</a></li>
+                <li><a href="/platforms/">platforms</a></li>
+                <li><a href="/tags/">tags</a></li>
+                </ul>
+            </nav>
+        </header>
+        {% block main %}{% endblock %}
+        <footer>
+            <span>Budgissimo | Developed by <a href="https://github.com/edwardjanson" target="_blank">Edward Janson</a></span>
+        </footer>
+    </body>
 </html>

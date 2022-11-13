@@ -1,0 +1,94 @@
+body {
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+#logo {
+    margin-left: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+#logo > a {
+    text-decoration: none;
+    color: white !important;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(64, 166, 164);
+}
+
+#menu {
+    display: flex;
+    list-style-type: none;
+    gap: 1rem;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-right: 1rem;
+}
+
+#menu > li > a {
+    text-decoration: none;
+    color: white !important;
+}
+
+#main-container {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    border: none;
+    padding: 0.7rem 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 0.5rem;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: rgb(203, 241, 241);
+    color: black;
+    border: 2px solid rgb(114, 191, 190);
+    border-radius: 0.3rem;
+  }
+  
+.button:hover {
+    background-color: rgb(64, 166, 164);
+    border: 2px solid rgb(64, 166, 164);
+    color: white;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

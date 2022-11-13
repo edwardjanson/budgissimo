@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Home
-{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block main %}
-            <div class="container">
-                <div class="row">
-                    <h1>Budgissimo</h1>
-                    <div class="intro-text">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis sequi eum veniam consequuntur aliquid molestias quidem, doloribus ullam omnis ducimus.</p>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est perspiciatis at, dolor aliquid laboriosam totam!</p>
-                    <div>
-                </div>
+        <main id="main-container">
+            <h1>Welcome to Budgissimo</h1>
+            <div class="intro-text">
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis sequi eum veniam consequuntur aliquid molestias quidem, doloribus ullam omnis ducimus.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est perspiciatis at, dolor aliquid laboriosam totam!</p>
+            <div>
+            <div class="buttons">
+                <a href="/account/new" class="button">Sign Up</a>
+                <a href="/account/new" class="button">Login</a>
             </div>
+        </main>
 {% endblock %}
