@@ -1,1 +1,40 @@
 
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Abel" rel="stylesheet">
+
+        <!-- https://favicon.io/emoji-favicons/money-bag -->
+        <link href="/static/images/favicon.ico" rel="icon">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+        <title>{% block title %}{% endblock %} | Budgissimo</title>
+
+    </head>
+<body>
+    <header>
+        <span id="logo">BUDGISSIMO</span>
+        <nav>
+            <ul id="menu">
+              <li><a href="/">home</a></li>
+              <li><a href="/account/">account</a></li>
+              <li><a href="/platforms/">platforms</a></li>
+              <li><a href="/tags/">tags</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block main %}{% endblock %}
+    <footer>
+        Budgissimo | Developed by <a href="https://github.com/edwardjanson" target="_blank">Edward Janson</a>
+    </footer>
+</body>
+</html>
