@@ -1,5 +1,7 @@
 from flask import Blueprint, redirect, render_template, request
 import repositories.tag_repository as tag_repository
+import repositories.campaign_repository as campaign_repository
+import repositories.campaign_tag_repository as campaign_tag_repository
 import repositories.account_repository as account_repository
 import repositories.budget_repository as budget_repository
 from models.tag import Tag
@@ -37,7 +39,7 @@ def create_tag():
 @tags_blueprint.route("/tags/<id>")
 def tag_details(id):
     tag = tag_repository.select(id)
-    campaigns = tag_repository.select_all_campaigns_by_tag(tag)
+    campaigns = campaign_tag_repository.select_all_campaigns_by_tag(tag)
 
     return render_template("tags/index.html", tag=tag, campaigns=campaigns)
 

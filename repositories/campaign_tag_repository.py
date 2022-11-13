@@ -56,3 +56,17 @@ def update(campaign_tag):
     sql = "UPDATE campaigns_tags SET (campaign_id, tag_id) = (%s, %s) WHERE id = %s"
     values = [campaign_tag.campaign.id, campaign_tag.tag.id, campaign_tag.id]
     run_sql(sql, values)
+
+
+def select_all_campaigns_by_tag(tag):
+    campaigns = []
+
+    sql = "SELECT campaign_id FROM campaigns_tags WHERE tag_id = %s"
+    values = [tag.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        campaign = campaign_repository.select(result["campaign_id"])
+        campaigns.append(campaign)
+    
+    return campaigns

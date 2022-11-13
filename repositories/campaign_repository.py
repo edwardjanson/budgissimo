@@ -58,15 +58,15 @@ def update(campaign):
     run_sql(sql, values)
 
 
-def select_all_by_tag(tag):
+def select_all_by_platform(platform):
     campaigns = []
 
-    sql = "SELECT campaign_id FROM campaigns_tags WHERE tag_id = %s"
-    values = [tag.id]
+    sql = "SELECT id FROM campaigns WHERE platform_id = %s"
+    values = [platform.id]
     results = run_sql(sql, values)
 
     for result in results:
-        campaign = select(result["campaign_id"])
+        campaign = select(result["id"])
         campaigns.append(campaign)
     
     return campaigns

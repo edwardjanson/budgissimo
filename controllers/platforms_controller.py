@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request
 import repositories.platform_repository as platform_repository
+import repositories.campaign_repository as campaign_repository
 import repositories.account_repository as account_repository
 import repositories.budget_repository as budget_repository
 from models.platform import Platform
@@ -32,6 +33,14 @@ def create_platform():
     new_platform = Platform(platform_name, budget, account)
     platform_repository.save(new_platform)
     return redirect("/platforms")
+
+
+@platforms_blueprint.route("/platforms/<id>")
+def tag_details(id):
+    platform = platform_repository.select(id)
+    campaigns = campaign_repository.select_all_by_platform(platform)
+
+    return render_template("platforms/index.html", platform=platform, campaigns=campaigns)
 
 
 @platforms_blueprint.route("/platforms/<id>/edit")
