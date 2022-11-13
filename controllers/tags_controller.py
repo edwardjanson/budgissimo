@@ -34,6 +34,14 @@ def create_tag():
     return redirect("/tags")
 
 
+@tags_blueprint.route("/tags/<id>")
+def tag_details(id):
+    tag = tag_repository.select(id)
+    campaigns = tag_repository.select_all_campaigns_by_tag(tag)
+
+    return render_template("tags/index.html", tag=tag, campaigns=campaigns)
+
+
 @tags_blueprint.route("/tags/<id>/edit")
 def edit_tag(id):
     tag = tag_repository.select(id)
