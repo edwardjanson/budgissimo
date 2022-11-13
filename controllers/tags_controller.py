@@ -36,36 +36,36 @@ def create_tag():
     return redirect("/tags")
 
 
-@tags_blueprint.route("/tags/<id>")
-def tag_details(id):
-    tag = tag_repository.select(id)
+@tags_blueprint.route("/tags/<tag_id>")
+def tag_details(tag_id):
+    tag = tag_repository.select(tag_id)
     campaigns = campaign_tag_repository.select_all_campaigns_by_tag(tag)
 
     return render_template("tags/index.html", tag=tag, campaigns=campaigns)
 
 
-@tags_blueprint.route("/tags/<id>/edit")
-def edit_tag(id):
-    tag = tag_repository.select(id)
+@tags_blueprint.route("/tags/<tag_id>/edit")
+def edit_tag(tag_id):
+    tag = tag_repository.select(tag_id)
     return render_template('tags/edit.html', tag=tag)
 
 
-@tags_blueprint.route("/tags/<id>", methods=["POST"])
-def update_tag(id):
+@tags_blueprint.route("/tags/<tag_id>", methods=["POST"])
+def update_tag(tag_id):
     tag_name = request.form["tag_name"]
     monthly_budget = request.form["monthly_budget"]
     amount_spent = request.form["amount_spent"]
 
-    tag = tag_repository.select(id)
+    tag = tag_repository.select(tag_id)
     updated_budget = Budget(monthly_budget, amount_spent, tag.budget.id) # type: ignore
     budget_repository.update(updated_budget)
-    updated_tag = Tag(tag_name, updated_budget, id)
+    updated_tag = Tag(tag_name, updated_budget, tag_id)
     tag_repository.update(updated_tag)
 
     return redirect("/tags")
 
 
-@tags_blueprint.route("/tags/<id>/delete", methods=["POST"])
-def delete_tag(id):
-    tag_repository.delete(id)
+@tags_blueprint.route("/tags/<tag_id>/delete", methods=["POST"])
+def delete_tag(tag_id):
+    tag_repository.delete(tag_id)
     return redirect("/tags")
