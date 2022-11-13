@@ -6,7 +6,7 @@ class Budget:
     def __init__(self, monthly_budget, amount_spent=None, id=None):
         self.monthly_budget = monthly_budget
         self.daily_budget = self.calculated_daily_budget()
-        self.amount_spent = "NULL" if not amount_spent else amount_spent
+        self.amount_spent = amount_spent
         self.id = id
     
     def update_monthly_budget(self, budget):
