@@ -1,4 +1,3 @@
-import pdb
 from flask import Blueprint, redirect, render_template, request, session
 
 import repositories.account_repository as account_repository
@@ -12,7 +11,7 @@ from models.budget import Budget
 accounts_blueprint = Blueprint("accounts", __name__)
 
 
-@accounts_blueprint.route("/account/")
+@accounts_blueprint.route("/account")
 def account():
     session.clear()
     session["account_id"] = 1

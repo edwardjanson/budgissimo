@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Account{% endblock %}
+
+{% block main %}
+        <main id="main-container">
+            <h1>Your Platforms</h1>
+            <div class="stats-table accounts-table">
+                <table>
+                    <tr>
+                      <th class="first-column">Platforms</th>
+                      <th class="second-column">Monthly Budget</th>
+                      <th class="other-column">Daily Budget</th>
+                      <th class="other-column">Amount Spent</th>
+                    </tr>
+                    {% for platform in platforms %}
+                    <tr>
+                      <td class="first-column">{{ platform.name }}</td>
+                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.monthly_budget) }}</td>
+                      <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.daily_budget) }}</td>
+                      {% if account.budget.amount_spent %}
+                        <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.amount_spent) }}</th>
+                      {% else %}
+                        <td>-</th>
+                      {% endif %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
+        </main>
+{% endblock %}

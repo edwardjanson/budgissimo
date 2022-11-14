@@ -12,9 +12,9 @@ platforms_blueprint = Blueprint("platforms", __name__)
 
 @platforms_blueprint.route("/platforms")
 def platforms():
-    account = account_repository.select(1)
+    account = account_repository.select(session["account_id"])
     platforms = platform_repository.select_all_by_account(account)
-    return render_template("platforms/index.html", platforms=platforms)
+    return render_template("platforms/index.html", platforms=platforms, account=account)
 
 
 @platforms_blueprint.route("/platforms/new")
@@ -29,7 +29,7 @@ def create_platform():
     amount_spent = request.form["amount_spent"]
     
     budget = Budget(monthly_budget, amount_spent)
-    account = account_repository.select(1)
+    account = account_repository.select(session["account_id"])
     new_platform = Platform(platform_name, budget, account)
     platform_repository.save(new_platform)
     return redirect("/platforms")
