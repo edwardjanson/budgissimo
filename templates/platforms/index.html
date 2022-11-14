@@ -19,7 +19,7 @@
                       <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.monthly_budget) }}</td>
                       <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.daily_budget) }}</td>
                       {% if account.budget.amount_spent %}
-                        <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.amount_spent) }}</th>
+                        <td>{{ account.currency.symbol }}{{ platform.budget.amount_spent }}</th>
                       {% else %}
                         <td>-</th>
                       {% endif %}

@@ -28,7 +28,7 @@ def create_platform():
     monthly_budget = request.form["monthly_budget"]
     amount_spent = request.form["amount_spent"]
     
-    budget = Budget(monthly_budget, amount_spent)
+    budget = Budget(monthly_budget, int(amount_spent))
     account = account_repository.select(session["account_id"])
     new_platform = Platform(platform_name, budget, account)
     platform_repository.save(new_platform)

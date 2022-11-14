@@ -40,7 +40,7 @@ def edit_account():
 @accounts_blueprint.route("/account/edit", methods=["POST"])
 def update_account():
     currency_id = request.form["currency_id"]
-    monthly_budget = float(request.form["monthly_budget"])
+    monthly_budget = request.form["monthly_budget"]
     amount_spent = request.form["amount_spent"]
 
     updated_currency = currency_repository.select(currency_id)
@@ -49,8 +49,6 @@ def update_account():
     budget_repository.update(updated_budget)
     updated_account = Account(updated_budget, updated_currency, session["account_id"])
     account_repository.update(updated_account)
-
-    # pdb.set_trace()
 
     return redirect("/account/")
 

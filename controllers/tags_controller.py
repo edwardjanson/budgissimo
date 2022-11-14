@@ -84,6 +84,6 @@ def delete_tag(tag_id):
     if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
         tag_repository.delete(tag_id)
         return redirect("/tags")
-    
+        
     else: 
         return render_template("access_denied.html")
