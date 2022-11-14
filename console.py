@@ -73,39 +73,63 @@ linkedin_ads = Platform("LinkedIn Ads", linkedin_ads_budget, account)
 platform_repository.save(linkedin_ads)
 
 # ---------------------- Tags ---------------------- #
+# --- Promoting Category --- #
 # Brand Tag
 brand_budget = Budget(1000.00)
 budget_repository.save(brand_budget)
 
-brand_tag = Tag("Brand", brand_budget, account)
+brand_tag = Tag("Brand", "Promoting", brand_budget, account)
 tag_repository.save(brand_tag)
 
 # Non Brand Tag
 non_brand_budget = Budget(7500.00)
 budget_repository.save(non_brand_budget)
 
-non_brand_tag = Tag("Non Brand", non_brand_budget, account)
+non_brand_tag = Tag("Non Brand", "Promoting", non_brand_budget, account)
 tag_repository.save(non_brand_tag)
 
 # Retargeting Tag
 retargeting_budget = Budget(1500.00)
 budget_repository.save(retargeting_budget)
 
-retargeting_tag = Tag("Retargeting", retargeting_budget, account)
+retargeting_tag = Tag("Retargeting", "Promoting", retargeting_budget, account)
 tag_repository.save(retargeting_tag)
 
+# --- Type Category --- #
+# Search Tag
+search_budget = Budget(4000.00)
+budget_repository.save(retargeting_budget)
+
+retargeting_tag = Tag("Search", "Type", retargeting_budget, account)
+tag_repository.save(retargeting_tag)
+
+# Display Tag
+search_budget = Budget(1000.00)
+budget_repository.save(retargeting_budget)
+
+retargeting_tag = Tag("Display", "Type", retargeting_budget, account)
+tag_repository.save(retargeting_tag)
+
+# Social Tag
+search_budget = Budget(5000.00)
+budget_repository.save(retargeting_budget)
+
+retargeting_tag = Tag("Social", "Type", retargeting_budget, account)
+tag_repository.save(retargeting_tag)
+
+# --- Location Category --- #
 # UK Tag
 uk_budget = Budget(4750.00)
 budget_repository.save(uk_budget)
 
-uk_tag = Tag("UK", uk_budget, account)
+uk_tag = Tag("UK", "Location", uk_budget, account)
 tag_repository.save(uk_tag)
 
 # Worldwide Tag
 worldwide_budget = Budget(5250.00)
 budget_repository.save(worldwide_budget)
 
-worldwide_tag = Tag("Worldwide", worldwide_budget, account)
+worldwide_tag = Tag("Worldwide", "Location", worldwide_budget, account)
 tag_repository.save(worldwide_tag)
 
 # ---------------------- Campaigns ---------------------- #
@@ -166,7 +190,7 @@ campaign_tag_repository.save(campaign_tag_8)
 budget_5 = Budget(1000.00)
 budget_repository.save(budget_5)
 
-campaign_5 = Campaign("Retargeting - Worldwide", budget_5, google_ads)
+campaign_5 = Campaign("Display - Retargeting - Worldwide", budget_5, google_ads)
 campaign_repository.save(campaign_5)
 
 campaign_tag_9 = CampaignTag(campaign_5, retargeting_tag)
@@ -180,7 +204,7 @@ campaign_tag_repository.save(campaign_tag_10)
 budget_6 = Budget(1000.00)
 budget_repository.save(budget_6)
 
-campaign_6 = Campaign("Non Brand - Advertising Budget Tracking - UK", budget_6, facebook_ads)
+campaign_6 = Campaign("Carousel - Interests In Marketing - UK", budget_6, facebook_ads)
 campaign_repository.save(campaign_6)
 
 campaign_tag_11 = CampaignTag(campaign_6, non_brand_tag)
@@ -193,7 +217,7 @@ campaign_tag_repository.save(campaign_tag_12)
 budget_7 = Budget(500.00)
 budget_repository.save(budget_7)
 
-campaign_7 = Campaign("Retargeting - Website Visitors - UK", budget_7, facebook_ads)
+campaign_7 = Campaign("Carousel - Retargeting - UK", budget_7, facebook_ads)
 campaign_repository.save(campaign_7)
 
 campaign_tag_13 = CampaignTag(campaign_7, retargeting_tag)
@@ -207,7 +231,7 @@ campaign_tag_repository.save(campaign_tag_14)
 budget_8 = Budget(1000.00)
 budget_repository.save(budget_8)
 
-campaign_8 = Campaign("Non Brand - Advertising Budget Tracking - UK", budget_8, instagram_ads)
+campaign_8 = Campaign("Carousel - Interests In Marketing - UK", budget_8, instagram_ads)
 campaign_repository.save(campaign_8)
 
 campaign_tag_15 = CampaignTag(campaign_8, non_brand_tag)
@@ -221,7 +245,7 @@ campaign_tag_repository.save(campaign_tag_16)
 budget_9 = Budget(1000.00)
 budget_repository.save(budget_9)
 
-campaign_9 = Campaign("Non Brand - Advertising Budget Tracking - UK", budget_9, linkedin_ads)
+campaign_9 = Campaign("Carousel - Working In Marketing - UK", budget_9, linkedin_ads)
 campaign_repository.save(campaign_9)
 
 campaign_tag_17 = CampaignTag(campaign_9, non_brand_tag)
@@ -234,7 +258,7 @@ campaign_tag_repository.save(campaign_tag_18)
 budget_10 = Budget(1500.00)
 budget_repository.save(budget_10)
 
-campaign_10 = Campaign("Non Brand - Advertising Budget Tracking - Worldwide", budget_10, linkedin_ads)
+campaign_10 = Campaign("Carousel - Working In Marketing - Worldwide", budget_10, linkedin_ads)
 campaign_repository.save(campaign_10)
 
 campaign_tag_19 = CampaignTag(campaign_10, non_brand_tag)

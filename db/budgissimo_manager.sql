@@ -35,6 +35,7 @@ CREATE TABLE platforms (
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
     account_id SERIAL NOT NULL REFERENCES accounts(id),
     budget_id SERIAL NOT NULL REFERENCES budgets(id)
 );

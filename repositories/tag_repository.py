@@ -7,8 +7,8 @@ import repositories.campaign_repository as campaign_repository
 
 
 def save(tag):
-    sql = "INSERT INTO tags (name, budget_id, account_id) VALUES (%s, %s, %s) RETURNING *"
-    values = [tag.name, tag.budget.id, tag.account.id]
+    sql = "INSERT INTO tags (name, category, budget_id, account_id) VALUES (%s, %s, %s, %s) RETURNING *"
+    values = [tag.name, tag.category, tag.budget.id, tag.account.id]
     results = run_sql(sql, values)
     id = results[0]['id']
     tag.id = id
@@ -24,7 +24,7 @@ def select_all():
     for row in results:
         budget = budget_repository.select(row['budget_id'])
         account = account_repository.select(row['account_id'])
-        tag = Tag(row['name'], budget, account, row['id'])
+        tag = Tag(row['name'], row['category'], budget, account, row['id'])
         tags.append(tag)
     return tags
 
@@ -38,7 +38,7 @@ def select(id):
     if result is not None:
         budget = budget_repository.select(result['budget_id'])
         account = account_repository.select(result['account_id'])
-        tag = Tag(result['name'], budget, account, result['id'])
+        tag = Tag(result['name'], result['category'], budget, account, result['id'])
     return tag
 
 
@@ -54,8 +54,8 @@ def delete(id):
 
 
 def update(tag):
-    sql = "UPDATE tags SET (name, budget_id, account_id) = (%s, %s, %s) WHERE id = %s"
-    values = [tag.name, tag.budget.id, tag.account.id, tag.id]
+    sql = "UPDATE tags SET (name, category, budget_id, account_id) = (%s, %s, %s, %s) WHERE id = %s"
+    values = [tag.name, tag.category, tag.budget.id, tag.account.id, tag.id]
     run_sql(sql, values)
 
 

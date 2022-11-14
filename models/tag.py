@@ -1,7 +1,10 @@
+from typing import Literal
+
 class Tag:
 
-    def __init__(self, name, budget, account, id=None):
+    def __init__(self, name, category, budget, account, id=None):
         self.name = name
+        self.category = category
         self.budget = budget
         self.account = account
         self.id = id

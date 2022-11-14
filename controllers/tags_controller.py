@@ -26,12 +26,13 @@ def new_tag():
 @tags_blueprint.route("/tags/new", methods=["POST"])
 def create_tag():
     tag_name = request.form["tag_name"]
+    tag_type = request.form["tag_type"]
     monthly_budget = request.form["monthly_budget"]
     amount_spent = request.form["amount_spent"]
     
     budget = Budget(monthly_budget, amount_spent)
     account = account_repository.select(1)
-    new_tag = Tag(tag_name, budget, account)
+    new_tag = Tag(tag_name, tag_type, budget, account)
     tag_repository.save(new_tag)
     return redirect("/tags")
 
@@ -53,13 +54,14 @@ def edit_tag(tag_id):
 @tags_blueprint.route("/tags/<tag_id>", methods=["POST"])
 def update_tag(tag_id):
     tag_name = request.form["tag_name"]
+    tag_type = request.form["tag_type"]
     monthly_budget = request.form["monthly_budget"]
     amount_spent = request.form["amount_spent"]
 
     tag = tag_repository.select(tag_id)
     updated_budget = Budget(monthly_budget, amount_spent, tag.budget.id) # type: ignore
     budget_repository.update(updated_budget)
-    updated_tag = Tag(tag_name, updated_budget, tag_id)
+    updated_tag = Tag(tag_name, tag_type, updated_budget, tag_id)
     tag_repository.update(updated_tag)
 
     return redirect("/tags")
