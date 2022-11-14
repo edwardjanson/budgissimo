@@ -103,21 +103,37 @@ footer > span > a {
     align-items: center;
 }
 
-.account-form {
+.forms {
     font-size: 1.2rem;
     margin: 1rem;
     display: flex;
     justify-content: center;
 }
 
-.account-form > form {
+.forms > form {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
-.account-form > form > div > input {
+.forms > form > div > input {
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
     width: 14rem;
+    font-size: 1rem;
+}
+
+.forms > form > div > select {
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    width: 14.5rem;
+    font-size: 1rem;
+}
+
+.edit-account > form > div > input {
+    width: 8rem;
+}
+
+.edit-account > form > div > select {
+    width: 8.5rem;
 }
 
 .form-row {
@@ -129,6 +145,7 @@ footer > span > a {
 .submit-btn {
     margin: 1rem 0;
     align-self: center;
+    min-width: 10rem;
     padding: 0.3rem 0.8rem;
 }
 
@@ -155,14 +172,18 @@ table tr:nth-child(even) {
     background: rgb(206, 241, 241);
 }
 
+table {
+    border-collapse: collapse;
+}
+
 .first-column {
     position: absolute; 
-    width: 8rem;
+    width: 6rem;
 }
 
 .second-column {
     width: 8rem;
-    padding-left: 10rem;
+    padding-left: 6rem;
 }
 
 table tr:nth-child(1) > th.first-column {

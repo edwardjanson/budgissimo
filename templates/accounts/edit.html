@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Account{% endblock %}
+
+{% block main %}
+        <main id="main-container">
+            <h1>Edit Account</h1>
+            <div class="forms edit-account">
+                <form action="/account/edit" method="post">
+                    <div class="form-row">
+                        <label class="monthly-budget-label" for="monthly-budget">Monthly Budget</label>
+                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget" value="{{ '%.2f'|format(account.budget.monthly_budget) }}">
+                    </div>
+                    <div class="form-row">
+                        <label class="amount-spent-label" for="amount-spent">Amount Spent</label>
+                        <input class="form-inputs amount-spent-input" type="number" name="amount_spent" value="{{ '%.2f'|format(account.budget.amount_spent) }}">
+                    </div>
+                    <div class="form-row">
+                    <label class="currency-label" for="currency">Currency</label>
+                        <select class="form-inputs currency-input" name="currency_id">
+                        {% for currency in currencies %}
+                            <option value="{{ currency.id }}"
+                            {% if account.currency.id == currency.id %} 
+                            selected="selected" 
+                            {% endif %}>
+                            {{ currency.name }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <input class="form-inputs submit-btn button" type="submit" value="Apply Changes">
+                </form>
+            </div>
+        </main>
+{% endblock %}
