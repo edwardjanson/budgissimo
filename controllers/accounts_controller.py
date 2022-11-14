@@ -1,6 +1,8 @@
 from flask import Blueprint, redirect, render_template, request
 
 import repositories.account_repository as account_repository
+import repositories.platform_repository as platform_repository
+import repositories.tag_repository as tag_repository
 import repositories.currency_repository as currency_repository
 import repositories.budget_repository as budget_repository
 from models.account import Account
@@ -12,7 +14,8 @@ accounts_blueprint = Blueprint("accounts", __name__)
 @accounts_blueprint.route("/account/")
 def account():
     account = account_repository.select(1)
-    return render_template("accounts/index.html", account=account)
+    platform_budgets = budget_repository.combine_platforms(account)
+    return render_template("accounts/index.html", account=account, platform_budgets=platform_budgets)
 
 
 @accounts_blueprint.route("/account/edit")

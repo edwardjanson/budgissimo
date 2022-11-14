@@ -39,6 +39,10 @@ header {
     color: white !important;
 }
 
+#menu > li > a:hover {
+    font-weight: bolder;
+}
+
 #main-container {
     margin: 1rem;
     display: flex;
@@ -56,6 +60,10 @@ footer {
     margin: 1rem;
     display: flex;
     justify-content: center;
+}
+
+footer > span > a {
+    color: rgb(64, 166, 164) !important;
 }
 
 .buttons {
