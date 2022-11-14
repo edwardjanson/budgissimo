@@ -163,6 +163,10 @@ table > tr > th, td > a {
     width: 32rem;
 }
 
+.platforms-table > table {
+    width: 40rem;
+}
+
 th, td {
     height: 2rem;
     padding: 0.5rem;
@@ -186,6 +190,11 @@ table {
     width: 6rem;
     display: flex;
     align-items: center;
+}
+
+.platforms-table .first-column {
+    width: 13rem;
+    text-align: left;
 }
 
 .second-column {

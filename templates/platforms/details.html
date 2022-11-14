@@ -5,7 +5,7 @@
 {% block main %}
         <main id="main-container">
             <h1>{{ platform.name }} Campaigns</h1>
-            <div class="stats-table accounts-table">
+            <div class="stats-table platforms-table">
                 <table>
                     <tr>
                       <th class="first-column">Campaigns</th>
@@ -16,18 +16,18 @@
                     {% set monthly_budget_totals = [] %}
                     {% set daily_budget_totals = [] %}
                     {% set amount_spent_totals = [] %}
-                    {% for platform in platforms %}
+                    {% for campaign in campaigns %}
                     <tr>
-                      {{ monthly_budget_totals.append(platform.budget.monthly_budget) or "" }}
-                      {{ daily_budget_totals.append(platform.budget.daily_budget) or "" }}
-                      {% if platform.budget.amount_spent %}
-                        {{ amount_spent_totals.append(platform.budget.amount_spent) or "" }}
+                      {{ monthly_budget_totals.append(campaign.budget.monthly_budget) or "" }}
+                      {{ daily_budget_totals.append(campaign.budget.daily_budget) or "" }}
+                      {% if campaign.budget.amount_spent %}
+                        {{ amount_spent_totals.append(campaign.budget.amount_spent) or "" }}
                       {% endif %}
-                      <td class="first-column"><a href="/platforms/{{ platform.id }}">{{ platform.name }}</a></td>
-                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.monthly_budget) }}</td>
-                      <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.daily_budget) }}</td>
-                      {% if platform.budget.amount_spent %}
-                        <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.amount_spent) }}</th>
+                      <td class="first-column"><a href="/campaigns/{{ campaign.id }}">{{ campaign.name }}</a></td>
+                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(campaign.budget.monthly_budget) }}</td>
+                      <td>{{ account.currency.symbol }}{{ "%.2f"|format(campaign.budget.daily_budget) }}</td>
+                      {% if campaign.budget.amount_spent %}
+                        <td>{{ account.currency.symbol }}{{ "%.2f"|format(campaign.budget.amount_spent) }}</th>
                       {% else %}
                         <td>-</th>
                       {% endif %}

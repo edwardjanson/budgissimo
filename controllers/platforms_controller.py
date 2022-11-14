@@ -38,10 +38,11 @@ def create_platform():
 @platforms_blueprint.route("/platforms/<platform_id>")
 def platform_details(platform_id):
     if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        account = account_repository.select(session["account_id"])
         platform = platform_repository.select(platform_id)
         campaigns = campaign_repository.select_all_by_platform(platform)
 
-        return render_template("platforms/index.html", platform=platform, campaigns=campaigns)
+        return render_template("platforms/details.html", platform=platform, campaigns=campaigns, account=account)
 
     else: 
         return render_template("access_denied.html")
