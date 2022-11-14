@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, session
 import repositories.campaign_repository as campaign_repository
 import repositories.platform_repository as platform_repository
 import repositories.account_repository as account_repository
@@ -12,51 +12,75 @@ campaigns_blueprint = Blueprint("campaigns", __name__)
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/new")
 def new_campaign(platform_id):
-    return render_template("campaigns/new.html")
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        return render_template("/platforms/campaigns/new.html")
 
+    else: 
+        return render_template("access_denied.html")
+        
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/new", methods=["POST"])
 def create_campaign(platform_id):
-    campaign_name = request.form["campaign_name"]
-    monthly_budget = request.form["monthly_budget"]
-    amount_spent = request.form["amount_spent"]
-    
-    budget = Budget(monthly_budget, amount_spent)
-    platform = platform_repository.select(platform_id)
-    new_campaign = Campaign(campaign_name, budget, platform)
-    campaign_repository.save(new_campaign)
-    return redirect("/platforms/<platform_id>")
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        campaign_name = request.form["campaign_name"]
+        monthly_budget = request.form["monthly_budget"]
+        amount_spent = request.form["amount_spent"]
+        
+        budget = Budget(monthly_budget, amount_spent)
+        platform = platform_repository.select(platform_id)
+        new_campaign = Campaign(campaign_name, budget, platform)
+        campaign_repository.save(new_campaign)
+        return redirect("/platforms/<platform_id>")
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/<campaign_id>")
 def tag_details(platform_id, campaign_id):
-    campaign = campaign_repository.select(campaign_id)
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        campaign = campaign_repository.select(campaign_id)
 
-    return render_template("campaigns/index.html", campaign=campaign)
+        return render_template("campaigns/index.html", campaign=campaign)
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @campaigns_blueprint.route("/campaigns/<platform_id>/campaigns/<campaign_id>/edit")
 def edit_campaign(platform_id, campaign_id):
-    campaign = campaign_repository.select(campaign_id)
-    return render_template('campaigns/edit.html', campaign=campaign)
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        campaign = campaign_repository.select(campaign_id)
+        return render_template('campaigns/edit.html', campaign=campaign)
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @campaigns_blueprint.route("/campaigns/<platform_id>/campaigns/<campaign_id>", methods=["POST"])
 def update_campaign(platform_id, campaign_id):
-    campaign_name = request.form["campaign_name"]
-    monthly_budget = request.form["monthly_budget"]
-    amount_spent = request.form["amount_spent"]
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        campaign_name = request.form["campaign_name"]
+        monthly_budget = request.form["monthly_budget"]
+        amount_spent = request.form["amount_spent"]
 
-    campaign = campaign_repository.select(campaign_id)
-    updated_budget = Budget(monthly_budget, amount_spent, campaign.budget.id) # type: ignore
-    budget_repository.update(updated_budget)
-    updated_campaign = Campaign(campaign_name, updated_budget, campaign_id)
-    campaign_repository.update(updated_campaign)
+        campaign = campaign_repository.select(campaign_id)
+        updated_budget = Budget(monthly_budget, amount_spent, campaign.budget.id) # type: ignore
+        budget_repository.update(updated_budget)
+        updated_campaign = Campaign(campaign_name, updated_budget, campaign_id)
+        campaign_repository.update(updated_campaign)
 
-    return redirect("/campaigns/<platform_id>/campaigns")
+        return redirect("/campaigns/<platform_id>/campaigns")
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @campaigns_blueprint.route("/campaigns/<platform_id>/campaigns/<campaign_id>/delete", methods=["POST"])
 def delete_campaign(platform_id, campaign_id):
-    campaign_repository.delete(campaign_id)
-    return redirect("/campaigns")
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        campaign_repository.delete(campaign_id)
+        return redirect("/campaigns")
+
+    else: 
+        return render_template("access_denied.html")

@@ -1,3 +1,4 @@
+import pdb
 from db.run_sql import run_sql
 
 from models.account import Account
@@ -56,3 +57,26 @@ def update(account):
     sql = "UPDATE accounts SET (budget_id, currency_id) = (%s, %s) WHERE id = %s"
     values = [account.budget.id, account.currency.id, account.id]
     run_sql(sql, values)
+
+
+def request_allowed(account_id, column_name, id_check):
+    request_allowed = False
+    sql = """SELECT platforms.id as platform_id, tags.id as tag_id, campaigns.id as campaign_id
+            FROM platforms
+            INNER JOIN accounts
+                ON platforms.account_id = accounts.id
+            INNER JOIN tags
+                ON accounts.id = tags.account_id
+            INNER JOIN campaigns
+                ON platforms.id = campaigns.platform_id
+            WHERE accounts.id = %s;"""
+    values = [account_id]
+    results = run_sql(sql, values)
+
+    for row in results:
+        if int(id_check) == row[f'{column_name}']:
+            request_allowed = True
+            break
+
+    return request_allowed
+

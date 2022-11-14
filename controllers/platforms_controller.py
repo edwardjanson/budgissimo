@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, session
 import repositories.platform_repository as platform_repository
 import repositories.campaign_repository as campaign_repository
 import repositories.account_repository as account_repository
@@ -37,34 +37,50 @@ def create_platform():
 
 @platforms_blueprint.route("/platforms/<platform_id>")
 def platform_details(platform_id):
-    platform = platform_repository.select(platform_id)
-    campaigns = campaign_repository.select_all_by_platform(platform)
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        platform = platform_repository.select(platform_id)
+        campaigns = campaign_repository.select_all_by_platform(platform)
 
-    return render_template("platforms/index.html", platform=platform, campaigns=campaigns)
+        return render_template("platforms/index.html", platform=platform, campaigns=campaigns)
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @platforms_blueprint.route("/platforms/<platform_id>/edit")
 def edit_platform(platform_id):
-    platform = platform_repository.select(platform_id)
-    return render_template('platforms/edit.html', platform=platform)
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        platform = platform_repository.select(platform_id)
+        return render_template('platforms/edit.html', platform=platform)
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @platforms_blueprint.route("/platforms/<platform_id>", methods=["POST"])
 def update_platform(platform_id):
-    platform_name = request.form["platform_name"]
-    monthly_budget = request.form["monthly_budget"]
-    amount_spent = request.form["amount_spent"]
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        platform_name = request.form["platform_name"]
+        monthly_budget = request.form["monthly_budget"]
+        amount_spent = request.form["amount_spent"]
 
-    platform = platform_repository.select(platform_id)
-    updated_budget = Budget(monthly_budget, amount_spent, platform.budget.id) # type: ignore
-    budget_repository.update(updated_budget)
-    updated_platform = Platform(platform_name, updated_budget, platform_id)
-    platform_repository.update(updated_platform)
+        platform = platform_repository.select(platform_id)
+        updated_budget = Budget(monthly_budget, amount_spent, platform.budget.id) # type: ignore
+        budget_repository.update(updated_budget)
+        updated_platform = Platform(platform_name, updated_budget, platform_id)
+        platform_repository.update(updated_platform)
 
-    return redirect("/platforms")
+        return redirect("/platforms")
+
+    else: 
+        return render_template("access_denied.html")
 
 
 @platforms_blueprint.route("/platforms/<platform_id>/delete", methods=["POST"])
 def delete_platform(platform_id):
-    platform_repository.delete(platform_id)
-    return redirect("/platforms")
+    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+        platform_repository.delete(platform_id)
+        return redirect("/platforms")
+
+    else: 
+        return render_template("access_denied.html")
