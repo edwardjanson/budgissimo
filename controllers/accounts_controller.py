@@ -18,6 +18,16 @@ def account():
     return render_template("accounts/index.html", account=account, platform_budgets=platform_budgets)
 
 
+@accounts_blueprint.route("/account/new")
+def new_campaign():
+    return render_template("accounts/new.html")
+
+
+@accounts_blueprint.route("/accounts/new", methods=["POST"])
+def create_campaign():
+    return redirect("/account/")
+
+
 @accounts_blueprint.route("/account/edit")
 def edit_account():
     account = account_repository.select(1)

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block main %}
+        <main id="main-container">
+            <h1>Create an Account</h1>
+            <div class="intro-text">
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis sequi eum veniam consequuntur aliquid molestias quidem, doloribus ullam omnis ducimus.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est perspiciatis at, dolor aliquid laboriosam totam!</p>
+            </div>
+            <div class="account-form">
+                <form action="/account/new" method="post">
+                    <div class="form-row">
+                        <label class="name-label" for="name">Your name</label>
+                        <input class="form-inputs name-input" type="text" name="name" id="name">
+                    </div>
+                    <div class="form-row">
+                        <label class="email-label" for="email">Your email</label>
+                        <input class="form-inputs email-input" type="email" name="email" id="email">
+                    </div>
+                    <div class="form-row">
+                        <label class="password-label" for="password">Password</label>
+                        <input class="form-inputs password-input" type="password" name="password" id="password">
+                    </div>
+                    <input class="form-inputs submit-btn button" type="submit" value="Create Account">
+                </form>
+            </div>
+        </main>
+{% endblock %}

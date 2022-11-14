@@ -3,6 +3,7 @@ body {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    color: rgb(68, 68, 68);
   }
 
 #logo {
@@ -83,7 +84,7 @@ footer > span > a {
     transition-duration: 0.4s;
     cursor: pointer;
     background-color: rgb(203, 241, 241);
-    color: black;
+    color: rgb(68, 68, 68);
     border: 2px solid rgb(114, 191, 190);
     border-radius: 0.3rem;
   }
@@ -99,4 +100,33 @@ footer > span > a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.account-form {
+    font-size: 1.2rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.account-form > form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.account-form > form > div > input {
+    width: 14rem;
+}
+
+.form-row {
+    margin: 0.5rem 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.submit-btn {
+    margin: 1rem 0;
+    align-self: center;
+    padding: 0.3rem 0.8rem;
 }
