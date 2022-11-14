@@ -9,24 +9,29 @@
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis sequi eum veniam consequuntur aliquid molestias quidem, doloribus ullam omnis ducimus.</p>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est perspiciatis at, dolor aliquid laboriosam totam!</p>
             <div>
-            <div class="stats-table">
+            <div class="stats-table accounts-table">
                 <table>
                     <tr>
-                      <th>Type</th>
-                      <th>Monthly Budget</th>
-                      <th>Daily Budget</th>
-                      <th>Amount Spent</th>
+                      <th class="first-column"></th>
+                      <th class="second-column">Monthly Budget</th>
+                      <th class="other-column">Daily Budget</th>
+                      <th class="other-column">Amount Spent</th>
                     </tr>
                     <tr>
-                      <td>Platforms</td>
-                      <td>{{ platform_budgets.monthly_budget }}</td>
-                      <td>{{ platform_budgets.daily_budget }}</td>
-                      <th>{{ platform_budgets.append_spent }}</th>
+                      <td class="first-column">Platforms</td>
+                      <td class="second-column">{{ account.currency.symbol }}{{ platform_budgets.monthly_budget }}</td>
+                      <td>{{ account.currency.symbol }}{{ platform_budgets.daily_budget }}</td>
+                      {% if platform_budgets.append_spent %}
+                        <td>{{ account.currency.symbol }}{{ platform_budgets.append_spent }}</th>
+                      {% else %}
+                        <td>-</th>
+                      {% endif %}
                     </tr>
                   </table>
             </div>
             <div class="buttons">
-                <a href="/account/edit" class="button">Edit Account</a>
-            </div>
+              <a href="/account/edit" class="button">Edit</a>
+              <a href="/account/" class="button">Logout</a>
+          </div>
         </main>
 {% endblock %}

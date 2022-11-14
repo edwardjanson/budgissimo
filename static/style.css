@@ -76,6 +76,7 @@ footer > span > a {
 .button {
     border: none;
     padding: 0.7rem 1.5rem;
+    width: 3rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -129,4 +130,53 @@ footer > span > a {
     margin: 1rem 0;
     align-self: center;
     padding: 0.3rem 0.8rem;
+}
+
+.stats-table {
+    margin: 3rem 0;
+    width: 90vw;
+    overflow-x: scroll;
+}
+
+.accounts-table > table {
+    width: 35rem;
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.other-column {
+    width: 8rem;
+}
+
+table tr:nth-child(even) {
+    background: rgb(206, 241, 241);
+}
+
+.first-column {
+    position: absolute; 
+    width: 8rem;
+}
+
+.second-column {
+    width: 8rem;
+    padding-left: 10rem;
+}
+
+table tr:nth-child(1) > th.first-column {
+    margin-left: -0.2rem;
+    height: 1rem;
+    background-color: white;
+}
+
+table tr:nth-child(even) .first-column {
+    margin-left: -0.2rem;
+    background: rgb(206, 241, 241);
+}
+
+table tr:nth-child(odd) .first-column {
+    margin-left: -0.2rem;
+    background: white;
 }
