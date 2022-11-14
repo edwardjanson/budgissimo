@@ -29,7 +29,7 @@
                       {% if campaign.budget.amount_spent %}
                         <td>{{ account.currency.symbol }}{{ "%.2f"|format(campaign.budget.amount_spent) }}</th>
                       {% else %}
-                        <td>-</th>
+                        <td>-</td>
                       {% endif %}
                     </tr>
                     {% endfor %}
@@ -40,7 +40,7 @@
                       {% if amount_spent_totals %}
                         <td>{{ account.currency.symbol }}{{ "%.2f" | format(amount_spent_totals | sum) }}</th>
                       {% else %}
-                        <td>-</th>
+                        <td>-</td>
                       {% endif %}
                     </tr>
                   </table>

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Platforms{% endblock %}
+
+{% block main %}
+        <main id="main-container">
+            <h1>Edit Platforms</h1>
+            <form action="/platforms/edit" method="post">
+                <div class="stats-table edit-platforms">
+                    <table>
+                        <tr>
+                        <th class="first-column">Platforms</th>
+                        <th class="second-column">Monthly Budget</th>
+                        <th class="other-column">Amount Spent</th>
+                        </tr>
+                        {% set monthly_budget_totals = [] %}
+                        {% set amount_spent_totals = [] %}
+                        {% for platform in platforms %}
+                        <tr>
+                        {{ monthly_budget_totals.append(platform.budget.monthly_budget) or "" }}
+                        {% if platform.budget.amount_spent %}
+                            {{ amount_spent_totals.append(platform.budget.amount_spent) or "" }}
+                        {% endif %}
+                        <td class="first-column">
+                            <input class="form-inputs platform-name-input" type="text" name="platform_name_{{ platform.id }}" value="{{ platform.name }}"/>
+                        </td>
+                        <td class="second-column">
+                            <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget_{{ platform.id }}" value="{{ '%.2f'|format(platform.budget.monthly_budget) }}"/>
+                        </td>
+                        <td class="other-column">
+                            <input class="form-inputs amount-spent-input" type="number" name="amount_spent_{{ platform.id }}" 
+                            {% if platform.budget.amount_spent %}
+                            value="{{ '%.2f'|format(platform.budget.amount_spent) }}"
+                            {% endif %}
+                            />
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                        <td class="first-column">Total</a></td>
+                        <td class="second-column">{{ account.currency.symbol }}{{ "%.2f" | format(monthly_budget_totals | sum) }}</td>
+                        {% if amount_spent_totals %}
+                            <td>{{ account.currency.symbol }}{{ "%.2f" | format(amount_spent_totals | sum) }}</th>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+                        </tr>
+                    </table>
+                </div>
+                <div class="buttons">
+                    <input class="form-inputs submit-btn button" type="submit" value="Apply Changes"/>
+                    <a href="/platforms/delete" class="button">Delete Selected</a>
+                  </div>
+            </form>
+        </main>
+{% endblock %}

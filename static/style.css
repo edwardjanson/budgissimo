@@ -151,6 +151,7 @@ table > tr > th, td > a {
     align-self: center;
     min-width: 10rem;
     padding: 0.3rem 0.8rem;
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
 }
 
 .stats-table {
@@ -222,6 +223,27 @@ table tr:nth-child(odd) .first-column {
     border-collapse: collapse;
 }
 
-.accounts-table tr:last-child td {
+.accounts-table tr:last-child td,
+.edit-platforms tr:last-child td {
     background-color: rgb(240, 240, 240);
+}
+
+
+.edit-platforms .second-column {
+    padding-left: 8rem;
+}
+
+.edit-platforms .first-column > input {
+    font-size: 0.9rem;
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    width: 6rem;
+    text-align: left;
+} 
+
+.edit-platforms .second-column > input,
+.edit-platforms .other-column > input {
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    width: 5rem;
+    text-align: left;
 }

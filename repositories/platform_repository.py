@@ -38,6 +38,7 @@ def select(id):
         budget = budget_repository.select(result['budget_id'])
         account = account_repository.select(result['account_id'])
         platform = Platform(result['name'], budget, account, result['id'])
+        
     return platform
 
 
