@@ -22,6 +22,7 @@
                             {{ amount_spent_totals.append(platform.budget.amount_spent) or "" }}
                         {% endif %}
                         <td class="first-column">
+                            <input type="checkbox" name="platform_{{ platform.id }}">
                             <input class="form-inputs platform-name-input" type="text" name="platform_name_{{ platform.id }}" value="{{ platform.name }}"/>
                         </td>
                         <td class="second-column">
@@ -48,9 +49,9 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <input class="form-inputs submit-btn button" type="submit" value="Apply Changes"/>
-                    <a href="/platforms/delete" class="button">Delete Selected</a>
-                  </div>
+                    <input class="form-inputs button" type="submit" name="action" value="Apply Changes"/>
+                    <input class="form-inputs button" type="submit" name="action" value="Delete Selected"/>
+                </div>
             </form>
         </main>
 {% endblock %}

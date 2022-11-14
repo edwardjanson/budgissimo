@@ -61,18 +61,26 @@ def update_all_platforms():
     account = account_repository.select(session["account_id"])
     platforms = platform_repository.select_all_by_account(account)
 
-    for platform in platforms:
-        platform_name = request.form[f"platform_name_{platform.id}"]
-        monthly_budget = float(request.form[f"monthly_budget_{platform.id}"])
-        amount_spent = float(request.form[f"amount_spent_{platform.id}"]) if request.form[f"amount_spent_{platform.id}"] else None
+    if request.form["action"] == "Apply Changes":
+        for platform in platforms:
+            platform_name = request.form[f"platform_name_{platform.id}"]
+            monthly_budget = float(request.form[f"monthly_budget_{platform.id}"])
+            amount_spent = float(request.form[f"amount_spent_{platform.id}"]) if request.form[f"amount_spent_{platform.id}"] else None
 
-        platform = platform_repository.select(platform.id)
-        updated_budget = Budget(monthly_budget, amount_spent, platform.budget.id) # type: ignore
-        budget_repository.update(updated_budget)
+            platform = platform_repository.select(platform.id)
+            updated_budget = Budget(monthly_budget, amount_spent, platform.budget.id) # type: ignore
+            budget_repository.update(updated_budget)
 
-        updated_platform = Platform(platform_name, updated_budget, platform.account, platform.id) # type: ignore
-                
-        platform_repository.update(updated_platform)
+            updated_platform = Platform(platform_name, updated_budget, platform.account, platform.id) # type: ignore
+                    
+            platform_repository.update(updated_platform)
+    
+    elif request.form["action"] == "Delete Selected":
+        for platform in platforms:
+            if request.form.get(f"platform_{platform.id}"):
+                platform_repository.delete(platform.id)
+                import pdb
+                pdb.set_trace()
 
     return redirect("/platforms")
 

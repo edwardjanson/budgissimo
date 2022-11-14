@@ -96,6 +96,13 @@ footer > span > a {
     color: white;
 }
 
+.form-inputs.button {
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    display: flex;
+    width: 8rem;
+    justify-content: center;
+}
+
 .intro-text {
     font-size: 1.2rem;
     display: flex;
@@ -149,7 +156,7 @@ table > tr > th, td > a {
 .submit-btn {
     margin: 1rem 0;
     align-self: center;
-    min-width: 10rem;
+    min-width: 9rem;
     padding: 0.3rem 0.8rem;
     font-family: 'Abel', Arial, Helvetica, sans-serif;
 }
@@ -228,15 +235,18 @@ table tr:nth-child(odd) .first-column {
     background-color: rgb(240, 240, 240);
 }
 
-
 .edit-platforms .second-column {
-    padding-left: 8rem;
+    padding-left: 8.6rem;
+}
+
+.edit-platforms .first-column .form-inputs {
+    margin-left: 0.5rem;
 }
 
 .edit-platforms .first-column > input {
     font-size: 0.9rem;
     font-family: 'Abel', Arial, Helvetica, sans-serif;
-    width: 6rem;
+    width: 5rem;
     text-align: left;
 } 
 

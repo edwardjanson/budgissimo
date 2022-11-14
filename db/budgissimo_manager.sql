@@ -36,19 +36,19 @@ CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     category VARCHAR(255) NOT NULL,
-    account_id SERIAL NOT NULL REFERENCES accounts(id),
-    budget_id SERIAL NOT NULL REFERENCES budgets(id)
+    account_id SERIAL NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE
 );
 
 CREATE TABLE campaigns (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    platform_id SERIAL NOT NULL REFERENCES platforms(id),
+    platform_id SERIAL NOT NULL REFERENCES platforms(id) ON DELETE CASCADE,
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE
 );
 
 CREATE TABLE campaigns_tags (
     id SERIAL PRIMARY KEY,
-    campaign_id SERIAL NOT NULL REFERENCES campaigns(id),
-    tag_id SERIAL NOT NULL REFERENCES tags(id)
+    campaign_id SERIAL NOT NULL REFERENCES campaigns(id) ON DELETE CASCADE,
+    tag_id SERIAL NOT NULL REFERENCES tags(id) ON DELETE CASCADE
 );
