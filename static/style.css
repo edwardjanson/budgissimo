@@ -136,6 +136,10 @@ footer > span > a {
     width: 8.5rem;
 }
 
+table > tr > th, td > a {
+    color: rgb(52, 134, 133) !important;
+}
+
 .form-row {
     margin: 0.5rem 0;
     display: flex;
@@ -194,14 +198,21 @@ table tr:nth-child(1) > th.first-column {
     border: 0.01rem solid;
     border-color: white;
     background-color: white;
+    border-collapse: collapse;
 }
 
 table tr:nth-child(even) .first-column {
     margin-left: -0.2rem;
     background: rgb(206, 241, 241);
+    border-collapse: collapse;
 }
 
 table tr:nth-child(odd) .first-column {
     margin-left: -0.2rem;
     background: white;
+    border-collapse: collapse;
+}
+
+.accounts-table tr:last-child td {
+    background-color: rgb(240, 240, 240);
 }
