@@ -32,6 +32,7 @@ def select(id):
 
     if result is not None:
         budget = Budget(result['monthly_budget'], result['amount_spent'], result['id'])
+        
     return budget
 
 

@@ -19,8 +19,8 @@
                     </tr>
                     <tr>
                       <td class="first-column">Platforms</td>
-                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(platform_budgets.monthly_budget) }}</td>
-                      <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform_budgets.daily_budget) }}</td>
+                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.monthly_budget) }}</td>
+                      <td>{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.daily_budget) }}</td>
                       {% if account.budget.amount_spent %}
                         <td>{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.amount_spent) }}</th>
                       {% else %}

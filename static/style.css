@@ -156,7 +156,7 @@ footer > span > a {
 }
 
 .accounts-table > table {
-    width: 30rem;
+    width: 32rem;
 }
 
 th, td {
@@ -166,7 +166,7 @@ th, td {
 }
 
 .other-column {
-    width: 7rem;
+    width: 8rem;
 }
 
 table tr:nth-child(even) {
@@ -185,12 +185,14 @@ table {
 }
 
 .second-column {
-    width: 7rem;
+    width: 8rem;
     padding-left: 7rem;
 }
 
 table tr:nth-child(1) > th.first-column {
     margin-left: -0.2rem;
+    border: 0.01rem solid;
+    border-color: white;
     background-color: white;
 }
 

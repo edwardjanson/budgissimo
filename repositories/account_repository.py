@@ -39,6 +39,7 @@ def select(id):
         budget = budget_repository.select(result['budget_id'])
         currency = currency_repository.select(result['currency_id'])
         account = Account(budget, currency, result['id'])
+
     return account
 
 

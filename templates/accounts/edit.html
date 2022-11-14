@@ -9,11 +9,15 @@
                 <form action="/account/edit" method="post">
                     <div class="form-row">
                         <label class="monthly-budget-label" for="monthly-budget">Monthly Budget</label>
-                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget" value="{{ '%.2f'|format(account.budget.monthly_budget) }}">
+                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget" value="{{ '%.2f'|format(account.budget.monthly_budget) }}"/>
                     </div>
                     <div class="form-row">
                         <label class="amount-spent-label" for="amount-spent">Amount Spent</label>
-                        <input class="form-inputs amount-spent-input" type="number" name="amount_spent" value="{{ '%.2f'|format(account.budget.amount_spent) }}">
+                        <input class="form-inputs amount-spent-input" type="number" name="amount_spent"
+                        {% if account.budget.amount_spent %}
+                            value="{{ '%.2f'|format(account.budget.amount_spent) }}"
+                        {% endif %}
+                        />
                     </div>
                     <div class="form-row">
                     <label class="currency-label" for="currency">Currency</label>
@@ -28,7 +32,7 @@
                         {% endfor %}
                         </select>
                     </div>
-                    <input class="form-inputs submit-btn button" type="submit" value="Apply Changes">
+                    <input class="form-inputs submit-btn button" type="submit" value="Apply Changes"/>
                 </form>
             </div>
         </main>
