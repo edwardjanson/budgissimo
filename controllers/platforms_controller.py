@@ -79,8 +79,6 @@ def update_all_platforms():
         for platform in platforms:
             if request.form.get(f"platform_{platform.id}"):
                 platform_repository.delete(platform.id)
-                import pdb
-                pdb.set_trace()
 
     return redirect("/platforms")
 

@@ -12,14 +12,12 @@
             <div class="stats-table accounts-table">
                 <table>
                     <tr>
-                      <th class="first-column"></th>
-                      <th class="second-column">Monthly Budget</th>
+                      <th class="other-column">Monthly Budget</th>
                       <th class="other-column">Daily Budget</th>
                       <th class="other-column">Amount Spent</th>
                     </tr>
                     <tr>
-                      <td class="first-column">Platforms</td>
-                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.monthly_budget) }}</td>
+                      <td class="other-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.monthly_budget) }}</td>
                       <td>{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.daily_budget) }}</td>
                       {% if account.budget.amount_spent %}
                         <td>{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.amount_spent) }}</th>
