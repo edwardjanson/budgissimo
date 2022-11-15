@@ -202,7 +202,7 @@ table tr:nth-child(even) {
 }
 
 table {
-    border-collapse: collapse;
+    border-collapse: separate;
 }
 
 .first-column {
@@ -289,4 +289,13 @@ table tr:nth-child(odd) .first-column {
     font-size: 0.9rem;
     width: 6rem;
     text-align: left;
+}
+
+.tags-table .sub-header {
+    background-color: rgb(206, 241, 241) !important;
+}
+
+.tags-table .middle,
+.tags-table .total {
+    background-color: rgb(244, 243, 243) !important;
 }

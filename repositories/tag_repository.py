@@ -91,3 +91,36 @@ def get_tag_categories_and_names(account):
             tags_grouped[key].append(value)
 
     return tags_grouped
+
+
+def get_tags_by_categories(account):
+    categories = []
+
+    sql = "SELECT DISTINCT category FROM tags WHERE account_id = %s"
+    values = [account.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        categories.append(result["category"])
+
+    categories_with_names = []
+
+    for category in categories:
+        category_objects = []
+
+        sql = "SELECT * FROM tags WHERE account_id = %s AND category = %s"
+        values = [account.id, category] # type: ignore
+        results = run_sql(sql, values)
+
+        for row in results:
+            budget = budget_repository.select(row['budget_id'])
+            account = account_repository.select(row['account_id'])
+            tag = Tag(row['name'], row['category'], budget, account, row['id'])
+            category_objects.append(tag)
+        
+        category_dict = {}
+        category_dict[category] = category_objects
+        categories_with_names.append(category_dict)
+
+    return categories_with_names
+

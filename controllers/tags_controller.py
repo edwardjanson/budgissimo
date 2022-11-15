@@ -14,8 +14,9 @@ tags_blueprint = Blueprint("tags", __name__)
 @tags_blueprint.route("/tags")
 def tags():
     account = account_repository.select(session["account_id"])
-    tags = tag_repository.select_all_by_account(account)
-    return render_template("tags/index.html", tags=tags)
+    tag_categories = tag_repository.get_tags_by_categories(account)
+
+    return render_template("tags/index.html", tag_categories=tag_categories, account=account)
 
 
 @tags_blueprint.route("/tags/new")
@@ -43,7 +44,7 @@ def tag_details(tag_id):
         tag = tag_repository.select(tag_id)
         campaigns = campaign_tag_repository.select_all_campaigns_by_tag(tag)
 
-        return render_template("tags/index.html", tag=tag, campaigns=campaigns)
+        return render_template("tags/details.html", tag=tag, campaigns=campaigns)
     
     else: 
         return render_template("access_denied.")
