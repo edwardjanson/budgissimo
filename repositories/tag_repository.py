@@ -4,6 +4,7 @@ from models.tag import Tag
 import repositories.budget_repository as budget_repository
 import repositories.account_repository as account_repository
 import repositories.campaign_repository as campaign_repository
+from collections import defaultdict
 
 
 def save(tag):
@@ -71,3 +72,22 @@ def select_all_by_account(account):
         tags.append(tag)
     
     return tags
+
+
+def get_tag_categories_and_names(account):
+    tags = []
+
+    sql = "SELECT category, name FROM tags WHERE account_id = %s"
+    values = [account.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        tags.append({result["category"]: result["name"]})
+
+    # Group identical category keys and their tag names
+    tags_grouped = defaultdict(list)
+    for dict in tags:
+        for key, value in dict.items():
+            tags_grouped[key].append(value)
+
+    return tags_grouped

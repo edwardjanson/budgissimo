@@ -3,6 +3,7 @@ import repositories.platform_repository as platform_repository
 import repositories.campaign_repository as campaign_repository
 import repositories.account_repository as account_repository
 import repositories.budget_repository as budget_repository
+import repositories.tag_repository as tag_repository
 from models.platform import Platform
 from models.budget import Budget
 
@@ -25,13 +26,14 @@ def new_platform():
 @platforms_blueprint.route("/platforms/new", methods=["POST"])
 def create_platform():
     platform_name = request.form["platform_name"]
-    monthly_budget = request.form["monthly_budget"]
-    amount_spent = request.form["amount_spent"]
+    monthly_budget = float(request.form["monthly_budget"])
     
-    budget = Budget(monthly_budget, int(amount_spent))
+    budget = Budget(monthly_budget)
+    budget_repository.save(budget)
     account = account_repository.select(session["account_id"])
     new_platform = Platform(platform_name, budget, account)
     platform_repository.save(new_platform)
+
     return redirect("/platforms")
 
 
