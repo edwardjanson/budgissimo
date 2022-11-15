@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Platform{% endblock %}
+
+{% block main %}
+        <main id="main-container">
+            <h1>Add a {{ platform.name }} Campaign</h1>
+            <div class="forms new-platform">
+                <form action="/platforms/{{ platform.id }}/campaigns/new" method="post">
+                    <div class="form-row">
+                        <label class="platform-name-label" for="platform-name">Campaign name</label>
+                        <input class="form-inputs mplatform-name-input" type="text" name="campaign_name"/>
+                    </div>
+                    <div class="form-row">
+                        <label class="monthly-budget-label" for="monthly-budget">Monthly budget</label>
+                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget"/>
+                    </div>
+                    {% for tag_category, tag_names_ids in categories.items() %}
+                    <div class="form-row">
+                    <label class="category-label" for="category">{{ tag_category }}</label>
+                        <select class="form-inputs category-input" name="category_input_{{ tag_category }}">
+                            <option value="select" disabled selected>Select</option>
+                            {% for tag_name_id in tag_names_ids %}
+                            {% for name, id in tag_name_id.items()%}
+                            <option value="{{ id }}">
+                            {{ name }}
+                            </option>
+                            {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endfor %}
+                    <input class="form-inputs submit-btn button" type="submit" value="Create Campaign"/>
+                </form>
+            </div>
+        </main>
+{% endblock %}

@@ -3,8 +3,11 @@ import repositories.campaign_repository as campaign_repository
 import repositories.platform_repository as platform_repository
 import repositories.account_repository as account_repository
 import repositories.budget_repository as budget_repository
+import repositories.tag_repository as tag_repository
+import repositories.campaign_tag_repository as campaign_tag_repository
 from models.campaign import Campaign
 from models.budget import Budget
+from models.campaign_tag import CampaignTag
 
 
 campaigns_blueprint = Blueprint("campaigns", __name__)
@@ -12,8 +15,13 @@ campaigns_blueprint = Blueprint("campaigns", __name__)
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/new")
 def new_campaign(platform_id):
+    account = account_repository.select(session["account_id"])
+
     if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
-        return render_template("/platforms/campaigns/new.html")
+        platform = platform_repository.select(platform_id)
+        categories = tag_repository.get_tag_categories_and_names(account)
+
+        return render_template("/platforms/campaigns/new.html", platform=platform, categories=categories)
 
     else: 
         return render_template("access_denied.html")
@@ -21,16 +29,29 @@ def new_campaign(platform_id):
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/new", methods=["POST"])
 def create_campaign(platform_id):
-    if account_repository.request_allowed(session["account_id"], "platform_id", platform_id):
+    account = account_repository.select(session["account_id"])
+
+    if account_repository.request_allowed(session["account_id"], "platform_id", int(platform_id)):
         campaign_name = request.form["campaign_name"]
-        monthly_budget = request.form["monthly_budget"]
-        amount_spent = request.form["amount_spent"]
+        monthly_budget = float(request.form["monthly_budget"])
+        categories = tag_repository.get_tag_categories_and_names(account)
         
-        budget = Budget(monthly_budget, amount_spent)
+        budget = Budget(monthly_budget)
+        budget_repository.save(budget)
         platform = platform_repository.select(platform_id)
         new_campaign = Campaign(campaign_name, budget, platform)
-        campaign_repository.save(new_campaign)
-        return redirect("/platforms/<platform_id>")
+        campaign = campaign_repository.save(new_campaign)
+
+        for tag_category, tag_names_ids in categories.items():
+            try:
+                tag_id = request.form[f"category_input_{tag_category}"]
+                tag = tag_repository.select(tag_id)
+                campaign_tag = CampaignTag(campaign, tag)
+                campaign_tag_repository.save(campaign_tag)
+            except KeyError:
+                continue
+
+        return redirect(f"/platforms/{platform_id}")
 
     else: 
         return render_template("access_denied.html")

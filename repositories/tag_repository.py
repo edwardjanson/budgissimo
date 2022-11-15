@@ -77,12 +77,12 @@ def select_all_by_account(account):
 def get_tag_categories_and_names(account):
     tags = []
 
-    sql = "SELECT category, name FROM tags WHERE account_id = %s"
+    sql = "SELECT category, name, id FROM tags WHERE account_id = %s"
     values = [account.id]
     results = run_sql(sql, values)
 
     for result in results:
-        tags.append({result["category"]: result["name"]})
+        tags.append({result["category"]: {result["name"]: result["id"]}})
 
     # Group identical category keys and their tag names
     tags_grouped = defaultdict(list)
