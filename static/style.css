@@ -147,6 +147,14 @@ footer > span > a {
     width: 11rem;
 }
 
+.new-campaign > form > div > input {
+    width: 11rem;
+}
+
+.new-campaign > form > div > select {
+    width: 11.5rem;
+}
+
 table > tr > th, td > a {
     color: rgb(52, 134, 133) !important;
 }
@@ -243,7 +251,8 @@ table tr:nth-child(odd) .first-column {
     padding-left: 8.6rem;
 }
 
-.edit-platforms .first-column .form-inputs {
+.edit-platforms .first-column .form-inputs,
+.edit-campaigns .first-column .form-inputs {
     margin-left: 0.5rem;
 }
 
@@ -259,5 +268,25 @@ table tr:nth-child(odd) .first-column {
     font-family: 'Abel', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     width: 5rem;
+    text-align: left;
+}
+
+
+.edit-campaigns .first-column > input {
+    font-size: 0.9rem;
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    width: 10rem;
+    text-align: left;
+} 
+
+.edit-campaigns .second-column {
+    padding-left: 11.5rem;
+}
+
+.edit-campaigns .second-column > input,
+.edit-campaigns .other-column > input {
+    font-family: 'Abel', Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    width: 6rem;
     text-align: left;
 }
