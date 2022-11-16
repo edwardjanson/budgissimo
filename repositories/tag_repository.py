@@ -3,6 +3,7 @@ from db.run_sql import run_sql
 from models.tag import Tag
 import repositories.budget_repository as budget_repository
 import repositories.account_repository as account_repository
+import repositories.platform_repository as platform_repository
 import repositories.campaign_repository as campaign_repository
 import repositories.tag_category_repository as tag_category_repository
 from collections import defaultdict

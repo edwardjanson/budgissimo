@@ -3,6 +3,7 @@ from db.run_sql import run_sql
 from models.campaign import Campaign
 import repositories.budget_repository as budget_repository
 import repositories.platform_repository as platform_repository
+import repositories.campaign_repository as campaign_repository
 
 
 def save(campaign):
@@ -70,3 +71,41 @@ def select_all_by_platform(platform):
         campaigns.append(campaign)
     
     return campaigns
+
+
+def get_platforms_campaigns_by_tag(tag):
+    sql = """SELECT campaigns.id as campaign_id, campaigns.platform_id as platform_id FROM campaigns
+            INNER JOIN campaigns_tags
+	            ON campaigns_tags.campaign_id = campaigns.id
+            INNER JOIN tags
+	            ON campaigns_tags.tag_id = tags.id
+            WHERE tags.id = %s"""
+    
+    values = [tag.id]
+    results = run_sql(sql, values)
+
+    platforms = platform_repository.select_all_by_account(tag.account)
+
+    platforms_with_campaigns = []
+
+    for platform in platforms:
+        campaign_objects = []
+
+        sql = """SELECT campaigns.id as campaign_id, campaigns.platform_id as platform_id FROM campaigns
+                INNER JOIN campaigns_tags
+                    ON campaigns_tags.campaign_id = campaigns.id
+                INNER JOIN tags
+                    ON campaigns_tags.tag_id = tags.id
+                WHERE tags.id = %s AND platform_id = %s"""
+        values = [tag.id, platform.id] # type: ignore
+        results = run_sql(sql, values)
+
+        for row in results:
+            campaign = campaign_repository.select(row["campaign_id"])
+            campaign_objects.append(campaign)
+        
+        platform_dict = {}
+        platform_dict[platform] = campaign_objects
+        platforms_with_campaigns.append(platform_dict)
+
+    return platforms_with_campaigns

@@ -72,13 +72,14 @@ def create_tag():
 @tags_blueprint.route("/tags/<tag_id>")
 def tag_details(tag_id):
     if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
+        account = account_repository.select(session["account_id"])
         tag = tag_repository.select(tag_id)
-        campaigns = campaign_tag_repository.select_all_campaigns_by_tag(tag)
+        platforms_campaigns = campaign_repository.get_platforms_campaigns_by_tag(tag)
 
-        return render_template("tags/details.html", tag=tag, campaigns=campaigns)
-    
+        return render_template('tags/details.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
+        
     else: 
-        return render_template("access_denied.")
+        return render_template("access_denied.html")
 
 
 @tags_blueprint.route("/tags/edit")
@@ -131,26 +132,6 @@ def edit_tag(tag_id):
         tag = tag_repository.select(tag_id)
         return render_template('tags/edit.html', tag=tag)
 
-    else: 
-        return render_template("access_denied.html")
-
-
-@tags_blueprint.route("/tags/<tag_id>", methods=["POST"])
-def update_tag(tag_id):
-    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
-        tag_name = request.form["tag_name"]
-        tag_type = request.form["tag_type"]
-        monthly_budget = request.form["monthly_budget"]
-        amount_spent = request.form["amount_spent"]
-
-        tag = tag_repository.select(tag_id)
-        updated_budget = Budget(monthly_budget, amount_spent, tag.budget.id) # type: ignore
-        budget_repository.update(updated_budget)
-        updated_tag = Tag(tag_name, tag_type, updated_budget, tag_id)
-        tag_repository.update(updated_tag)
-
-        return redirect("/tags")
-        
     else: 
         return render_template("access_denied.html")
 

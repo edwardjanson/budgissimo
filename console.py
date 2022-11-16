@@ -110,24 +110,24 @@ tag_repository.save(retargeting_tag)
 # --- Type Category --- #
 # Search Tag
 search_budget = Budget(4000.00)
-budget_repository.save(retargeting_budget)
+budget_repository.save(search_budget)
 
-retargeting_tag = Tag("Search", type_category, retargeting_budget, account)
-tag_repository.save(retargeting_tag)
+search_tag = Tag("Search", type_category, retargeting_budget, account)
+tag_repository.save(search_tag)
 
 # Display Tag
-search_budget = Budget(1000.00)
-budget_repository.save(retargeting_budget)
+display_budget = Budget(1000.00)
+budget_repository.save(display_budget)
 
-retargeting_tag = Tag("Display", type_category, retargeting_budget, account)
-tag_repository.save(retargeting_tag)
+display_tag = Tag("Display", type_category, retargeting_budget, account)
+tag_repository.save(display_tag)
 
 # Social Tag
-search_budget = Budget(5000.00)
-budget_repository.save(retargeting_budget)
+social_budget = Budget(5000.00)
+budget_repository.save(social_budget)
 
-retargeting_tag = Tag("Social", type_category, retargeting_budget, account)
-tag_repository.save(retargeting_tag)
+social_tag = Tag("Social", type_category, retargeting_budget, account)
+tag_repository.save(social_tag)
 
 # --- Location Category --- #
 # UK Tag
@@ -219,7 +219,7 @@ budget_repository.save(budget_6)
 campaign_6 = Campaign("Carousel - Interests In Marketing - UK", budget_6, facebook_ads)
 campaign_repository.save(campaign_6)
 
-campaign_tag_11 = CampaignTag(campaign_6, non_brand_tag)
+campaign_tag_11 = CampaignTag(campaign_6, social_tag)
 campaign_tag_repository.save(campaign_tag_11)
 
 campaign_tag_12 = CampaignTag(campaign_6, uk_tag)
@@ -246,7 +246,7 @@ budget_repository.save(budget_8)
 campaign_8 = Campaign("Carousel - Interests In Marketing - UK", budget_8, instagram_ads)
 campaign_repository.save(campaign_8)
 
-campaign_tag_15 = CampaignTag(campaign_8, non_brand_tag)
+campaign_tag_15 = CampaignTag(campaign_8, social_tag)
 campaign_tag_repository.save(campaign_tag_15)
 
 campaign_tag_16 = CampaignTag(campaign_8, uk_tag)
@@ -260,7 +260,7 @@ budget_repository.save(budget_9)
 campaign_9 = Campaign("Carousel - Working In Marketing - UK", budget_9, linkedin_ads)
 campaign_repository.save(campaign_9)
 
-campaign_tag_17 = CampaignTag(campaign_9, non_brand_tag)
+campaign_tag_17 = CampaignTag(campaign_9, social_tag)
 campaign_tag_repository.save(campaign_tag_17)
 
 campaign_tag_18 = CampaignTag(campaign_9, uk_tag)
@@ -273,7 +273,7 @@ budget_repository.save(budget_10)
 campaign_10 = Campaign("Carousel - Working In Marketing - Worldwide", budget_10, linkedin_ads)
 campaign_repository.save(campaign_10)
 
-campaign_tag_19 = CampaignTag(campaign_10, non_brand_tag)
+campaign_tag_19 = CampaignTag(campaign_10, social_tag)
 campaign_tag_repository.save(campaign_tag_19)
 
 campaign_tag_20 = CampaignTag(campaign_10, worldwide_tag)

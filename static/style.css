@@ -155,7 +155,7 @@ footer > span > a {
     width: 11.5rem;
 }
 
-table > tr > th, td > a {
+table > tr > th, td > a, th > a {
     color: rgb(52, 134, 133) !important;
 }
 
@@ -298,7 +298,7 @@ table tr:nth-child(odd) .first-column {
 }
 
 .edit-tags .second-column {
-    padding-left: 10.2rem;
+    padding-left: 10.5rem;
 }
 
 .edit-campaigns .first-column > input {
@@ -332,4 +332,17 @@ table tr:nth-child(odd) .first-column {
 .new-tag {
     display: flex;
     flex-direction: column;
+}
+
+.tag-details-table .first-column {
+    width: 13rem;
+    text-align: left;
+}
+
+.tag-details-table > table {
+    width: 40rem;
+}
+
+.add-campaigns {
+    width: 8rem;
 }
