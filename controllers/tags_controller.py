@@ -104,18 +104,22 @@ def update_all_tags():
             tag = tag_repository.select(tag.id)
             updated_budget = Budget(monthly_budget, amount_spent, tag.budget.id) # type: ignore
             budget_repository.update(updated_budget)
-
             updated_tag = Tag(tag_name, tag.category, updated_budget, tag.account, tag.id) # type: ignore
-                    
             tag_repository.update(updated_tag)
+        
+        for category in tag_categories:
+            category_name = request.form[f"tag_category_{category.id}"]
+            tag_category = tag_category_repository.select(category.id)
+            updated_category = TagCategory(category_name, account, tag_category.id) # type: ignore
+            tag_category_repository.update(updated_category)                    
 
     elif request.form["action"] == "Delete Selected":
         for tag in tags:
-            if request.form.get(f"tag_{tag.id}"):
+            if request.form[f"tag_{tag.id}"]:
                 tag_repository.delete(tag.id)
             
         for category in tag_categories:
-            if  request.form.get(f"category_{category.id}"):
+            if  request.form[f"category_{category.id}"]:
                 tag_category_repository.delete(category.id)
 
     return redirect("/tags")

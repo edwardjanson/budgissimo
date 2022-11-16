@@ -17,7 +17,7 @@
                         {% for category, tags in tag_category.items() %}
                         <tr>
                             <th class="first-column sub-header">
-                                <input type="checkbox" name="category_{{ category.id }}">
+                                <input type="checkbox" class="category_checkbox" name="category_{{ category.id }}">
                                 <input class="form-inputs tag-name-input" type="text" name="tag_category_{{ category.id }}" value="{{ category.name }}"/>
                             </th>
                             <th class="sub-header"></th>
@@ -27,7 +27,7 @@
                         {% set monthly_budget_totals = [] %}
                         {% set amount_spent_totals = [] %}
                         {% for tag in tags %}
-                        <tr>
+                        <tr class="middle-rows">
                         {{ monthly_budget_totals.append(tag.budget.monthly_budget) or "" }}
                         {% if tag.budget.amount_spent %}
                             {{ amount_spent_totals.append(tag.budget.amount_spent) or "" }}
