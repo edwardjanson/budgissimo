@@ -4,6 +4,7 @@ from models.campaign import Campaign
 import repositories.budget_repository as budget_repository
 import repositories.platform_repository as platform_repository
 import repositories.campaign_repository as campaign_repository
+import repositories.campaign_tag_repository as campaign_tag_repository
 
 
 def save(campaign):
@@ -121,6 +122,7 @@ def get_platforms_campaigns_by_tag(tag):
 
 def get_platforms_campaigns_not_with_tag(tag):
     platforms = platform_repository.select_all_by_account(tag.account)
+    unwanted_campaign_ids = campaign_tag_repository.select_all_campaign_ids_by_tag(tag)
 
     platforms_with_campaigns = []
 
@@ -132,14 +134,15 @@ def get_platforms_campaigns_not_with_tag(tag):
                     ON campaigns_tags.campaign_id = campaigns.id
                 INNER JOIN tags
                     ON campaigns_tags.tag_id = tags.id
-                WHERE tags.id != %s AND platform_id = %s"""
-        values = [tag.id, platform.id] # type: ignore
+                WHERE platform_id = %s"""
+        values = [platform.id] # type: ignore
         results = run_sql(sql, values)
 
         for row in results:
             campaign = campaign_repository.select(row["campaign_id"])
-            campaign_objects.append(campaign)
-        
+            if row["campaign_id"] not in unwanted_campaign_ids:
+                campaign_objects.append(campaign)
+                
         platform_dict = {}
         platform_dict[platform] = campaign_objects
         platforms_with_campaigns.append(platform_dict)

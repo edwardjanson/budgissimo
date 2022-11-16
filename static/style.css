@@ -344,8 +344,8 @@ table tr:nth-child(odd) .first-column {
     width: 40rem;
 }
 
-.add-campaigns {
-    width: 8rem;
+.add-remove-campaigns {
+    width: 7.45rem;
 }
 
 .tag-campaign-table .first-column {

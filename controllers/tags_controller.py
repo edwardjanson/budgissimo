@@ -121,7 +121,7 @@ def update_all_tags():
                 tag_repository.delete(tag.id)
             
         for category in tag_categories:
-            if  request.form[f"category_{category.id}"]:
+            if request.form[f"category_{category.id}"]:
                 tag_category_repository.delete(category.id)
 
     return redirect("/tags")
@@ -171,6 +171,36 @@ def add_tag_to_campaigns_post(tag_id):
             if request.form[f"campaign_{campaign.id}"]:
                 campaign_tag = CampaignTag(campaign, tag)
                 campaign_tag_repository.save(campaign_tag)
+        except KeyError:
+            continue
+
+    return redirect(f"/tags/{tag_id}")
+
+
+@tags_blueprint.route("/tags/<tag_id>/campaigns/remove")
+def remove_tag_to_campaigns(tag_id):
+    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
+        account = account_repository.select(session["account_id"])
+        tag = tag_repository.select(tag_id)
+        platforms_campaigns = campaign_repository.get_platforms_campaigns_by_tag(tag)
+
+        return render_template('tags/campaigns/remove.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
+        
+    else: 
+        return render_template("access_denied.html")
+
+
+@tags_blueprint.route("/tags/<tag_id>/campaigns/remove", methods=["POST"])
+def remove_tag_to_campaigns_post(tag_id):
+    account = account_repository.select(session["account_id"])
+    tag = tag_repository.select(tag_id)
+    campaigns = campaign_repository.select_all_by_account(account)
+                
+    for campaign in campaigns:
+        try:
+            if request.form[f"campaign_{campaign.id}"]:
+                campaign_tag = campaign_tag_repository.select_by_tag_and_campaign(tag, campaign)
+                campaign_tag_repository.delete(campaign_tag.id) # type: ignore
         except KeyError:
             continue
 

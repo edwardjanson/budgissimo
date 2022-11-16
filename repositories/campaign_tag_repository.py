@@ -70,3 +70,29 @@ def select_all_campaigns_by_tag(tag):
         campaigns.append(campaign)
     
     return campaigns
+
+
+def select_all_campaign_ids_by_tag(tag):
+    campaign_ids = []
+
+    sql = "SELECT campaign_id FROM campaigns_tags WHERE tag_id = %s"
+    values = [tag.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        campaign_ids.append(result["campaign_id"])
+    
+    return campaign_ids
+
+
+def select_by_tag_and_campaign(tag, campaign):
+    campaign_tag = None
+    sql = "SELECT * FROM campaigns_tags WHERE tag_id = %s AND campaign_id = %s"
+    values = [tag.id, campaign.id]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        campaign = campaign_repository.select(result['campaign_id'])
+        tag = tag_repository.select(result['tag_id'])
+        campaign_tag = CampaignTag(campaign, tag, result['id'])
+    return campaign_tag
