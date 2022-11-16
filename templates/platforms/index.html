@@ -34,7 +34,7 @@
                     </tr>
                     {% endfor %}
                     <tr>
-                      <td class="first-column">Total</a></td>
+                      <td class="first-column">Total</td>
                       <td class="second-column">{{ account.currency.symbol }}{{ "%.2f" | format(monthly_budget_totals | sum) }}</td>
                       <td>{{ account.currency.symbol }}{{ "%.2f" | format(daily_budget_totals | sum) }}</td>
                       {% if amount_spent_totals %}

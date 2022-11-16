@@ -23,7 +23,7 @@
                       {% if campaign.budget.amount_spent %}
                         {{ amount_spent_totals.append(campaign.budget.amount_spent) or "" }}
                       {% endif %}
-                      <td class="first-column"><a href="/campaigns/{{ campaign.id }}">{{ campaign.name }}</a></td>
+                      <td class="first-column">{{ campaign.name }}</td>
                       <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(campaign.budget.monthly_budget) }}</td>
                       <td>{{ account.currency.symbol }}{{ "%.2f"|format(campaign.budget.daily_budget) }}</td>
                       {% if campaign.budget.amount_spent %}
@@ -34,7 +34,7 @@
                     </tr>
                     {% endfor %}
                     <tr>
-                      <td class="first-column">Total</a></td>
+                      <td class="first-column">Total</td>
                       <td class="second-column">{{ account.currency.symbol }}{{ "%.2f" | format(monthly_budget_totals | sum) }}</td>
                       <td>{{ account.currency.symbol }}{{ "%.2f" | format(daily_budget_totals | sum) }}</td>
                       {% if amount_spent_totals %}
