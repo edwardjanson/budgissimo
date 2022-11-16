@@ -50,6 +50,41 @@ def tag_details(tag_id):
         return render_template("access_denied.")
 
 
+@tags_blueprint.route("/tags/edit")
+def edit_all_tags():
+    account = account_repository.select(session["account_id"])
+    tag_categories = tag_repository.get_tags_by_categories(account)
+
+    return render_template("tags/edit.html", tag_categories=tag_categories, account=account)
+
+
+@tags_blueprint.route("/tags/edit", methods=["POST"])
+def update_all_tags():
+    account = account_repository.select(session["account_id"])
+    tags = tag_repository.select_all_by_account(account)
+
+    if request.form["action"] == "Apply Changes":
+        for tag in tags:
+            tag_name = request.form[f"tag_name_{tag.id}"]
+            monthly_budget = float(request.form[f"monthly_budget_{tag.id}"])
+            amount_spent = float(request.form[f"amount_spent_{tag.id}"]) if request.form[f"amount_spent_{tag.id}"] else None
+
+            tag = tag_repository.select(tag.id)
+            updated_budget = Budget(monthly_budget, amount_spent, tag.budget.id) # type: ignore
+            budget_repository.update(updated_budget)
+
+            updated_tag = Tag(tag_name, tag.category, updated_budget, tag.account, tag.id) # type: ignore
+                    
+            tag_repository.update(updated_tag)
+    
+    elif request.form["action"] == "Delete Selected":
+        for tag in tags:
+            if request.form.get(f"tag_{tag.id}"):
+                tag_repository.delete(tag.id)
+
+    return redirect("/tags")
+
+
 @tags_blueprint.route("/tags/<tag_id>/edit")
 def edit_tag(tag_id):
     if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):

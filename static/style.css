@@ -187,6 +187,14 @@ table > tr > th, td > a {
     width: 40rem;
 }
 
+.edit-tags > table {
+    width: 25rem;
+}
+
+.edit-platforms > table {
+    width: 23rem;
+}
+
 th, td {
     height: 2rem;
     padding: 0.5rem;
@@ -243,7 +251,9 @@ table tr:nth-child(odd) .first-column {
 }
 
 .accounts-table tr:last-child td,
-.edit-platforms tr:last-child td {
+.edit-platforms tr:last-child td,
+.platforms-table tr:last-child td,
+.edit-campaigns tr:last-child td {
     background-color: rgb(240, 240, 240);
 }
 
@@ -252,25 +262,44 @@ table tr:nth-child(odd) .first-column {
 }
 
 .edit-platforms .first-column .form-inputs,
-.edit-campaigns .first-column .form-inputs {
+.edit-campaigns .first-column .form-inputs,
+.edit-tags .first-column .form-inputs {
     margin-left: 0.5rem;
 }
 
-.edit-platforms .first-column > input {
+.edit-platforms .first-column > input,
+.edit-tags .first-column > input {
     font-size: 0.9rem;
     font-family: 'Abel', Arial, Helvetica, sans-serif;
     width: 5rem;
     text-align: left;
 } 
 
+.edit-tags .first-column {
+    padding-right: 4rem;
+}
+
+.edit-platforms .first-column {
+    padding-right: 2rem;
+}
+
+.edit-tags .first-column > input {
+    width: 7rem;
+}
+
 .edit-platforms .second-column > input,
-.edit-platforms .other-column > input {
+.edit-platforms .other-column > input,
+.edit-tags .second-column > input,
+.edit-tags .other-column > input {
     font-family: 'Abel', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     width: 5rem;
     text-align: left;
 }
 
+.edit-tags .second-column {
+    padding-left: 10.5rem;
+}
 
 .edit-campaigns .first-column > input {
     font-size: 0.9rem;
