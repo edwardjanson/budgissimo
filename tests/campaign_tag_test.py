@@ -6,6 +6,7 @@ from models.budget import Budget
 from models.platform import Platform
 from models.account import Account
 from models.currency import Currency
+from models.tag_category import TagCategory
 
 
 class TestCampaignTag(unittest.TestCase):
@@ -16,7 +17,8 @@ class TestCampaignTag(unittest.TestCase):
         self.budget_2 = Budget(400.00, 20.00)
         self.account_1 = Account(self.budget_1, self.currency_1)
         self.platform_1 = Platform("Google Ads", self.budget_1, self.account_1)
-        self.tag_1 = Tag("Test tag", self.budget_1, self.platform_1)
+        self.tag_category_1 = TagCategory("Location")
+        self.tag_1 = Tag("Test tag", self.tag_category_1, self.budget_1, self.platform_1)
         self.campaign_1 = Campaign("Test campaign", self.budget_2, self.platform_1)
         self.campaign_tag_1 = CampaignTag(self.campaign_1, self.tag_1)
     
