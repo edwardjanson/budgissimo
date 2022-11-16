@@ -328,3 +328,8 @@ table tr:nth-child(odd) .first-column {
 .tags-table .total {
     background-color: rgb(244, 243, 243) !important;
 }
+
+.new-tag {
+    display: flex;
+    flex-direction: column;
+}

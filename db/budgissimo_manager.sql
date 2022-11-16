@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS platforms CASCADE;
 DROP TABLE IF EXISTS tags CASCADE;
 DROP TABLE IF EXISTS campaigns CASCADE;
 DROP TABLE IF EXISTS campaigns_tags CASCADE;
+DROP TABLE IF EXISTS tag_categories CASCADE;
 
 
 CREATE TABLE currencies (
@@ -32,10 +33,15 @@ CREATE TABLE platforms (
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE
 );
 
+CREATE TABLE tag_categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255)
+);
+
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
-    category VARCHAR(255) NOT NULL,
+    category_id SERIAL NOT NULL REFERENCES tag_categories(id) ON DELETE CASCADE,
     account_id SERIAL NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE
 );

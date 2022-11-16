@@ -21,21 +21,30 @@ def tags():
 
 @tags_blueprint.route("/tags/new")
 def new_tag():
-    return render_template("tags/new.html")
+    tag_type = request.args.get("tag_type")
+    checked = "tag_category"
+
+    if tag_type:
+        if tag_type == "tag":
+            checked = "tag"
+            account= account_repository.select(session["account_id"])
+            tag_categories = tag_repository.get_categories(account)
+            return render_template("tags/new_tag.html", checked=checked, tag_categories=tag_categories)
+    else:
+        return render_template("tags/new_category.html", checked=checked)
+
+    return render_template("tags/new_category.html", checked=checked)
 
 
 @tags_blueprint.route("/tags/new", methods=["POST"])
 def create_tag():
-    tag_name = request.form["tag_name"]
-    tag_type = request.form["tag_type"]
-    monthly_budget = request.form["monthly_budget"]
-    amount_spent = request.form["amount_spent"]
-    
-    budget = Budget(monthly_budget, amount_spent)
-    account = account_repository.select(session["account_id"])
-    new_tag = Tag(tag_name, tag_type, budget, account)
-    tag_repository.save(new_tag)
-    return redirect("/tags")
+    if request.form["tag_type"] == "Tag Category" or request.form["tag_type"] == "Tag":
+        return redirect("/tags/new")
+        
+    else:
+        if request.form["action"] == "Create Category":
+            
+            return redirect("/tags/new")
 
 
 @tags_blueprint.route("/tags/<tag_id>")

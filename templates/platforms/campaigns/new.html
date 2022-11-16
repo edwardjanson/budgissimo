@@ -22,9 +22,9 @@
                             <option value="select" disabled selected>Select</option>
                             {% for tag_name_id in tag_names_ids %}
                                 {% for name, id in tag_name_id.items()%}
-                                <option value="{{ id }}">
-                                {{ name }}
-                                </option>
+                                    <option value="{{ id }}">
+                                        {{ name }}
+                                    </option>
                                 {% endfor %}
                             {% endfor %}
                         </select>

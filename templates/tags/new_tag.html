@@ -1,0 +1,22 @@
+{% extends "/tags/new.html" %}
+
+{% block new_tag %} 
+                <form action="/tags/new" method="post">
+                    <div class="form-row">
+                        <label class="category-label" for="category">Category name</label>
+                        <select class="form-inputs category-input" name="category_input_{{ tag_category }}">
+                            <option value="select" disabled selected>Select</option>
+                            {% for tag_category in tag_categories %}
+                                <option value="{{ tag_category }}">
+                                    {{ tag_category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label class="tag-name-label" for="tag-name">Tag name</label>
+                        <input class="form-inputs tag-name-input" type="text" name="tag_name"/>
+                    </div>
+                    <input class="form-inputs submit-btn button" name="action" type="submit" value="Create Tag"/>
+                </form>
+{% endblock %}

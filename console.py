@@ -7,6 +7,7 @@ from models.tag import Tag
 from models.campaign_tag import CampaignTag
 from models.budget import Budget
 from models.currency import Currency
+from models.tag_category import TagCategory
 
 import repositories.account_repository as account_repository
 import repositories.platform_repository as platform_repository
@@ -15,6 +16,7 @@ import repositories.campaign_repository as campaign_repository
 import repositories.campaign_tag_repository as campaign_tag_repository
 import repositories.budget_repository as budget_repository
 import repositories.currency_repository as currency_repository
+import repositories.tag_category_repository as tag_category_repository
 
 
 account_repository.delete_all()
@@ -73,26 +75,36 @@ linkedin_ads = Platform("LinkedIn Ads", linkedin_ads_budget, account)
 platform_repository.save(linkedin_ads)
 
 # ---------------------- Tags ---------------------- #
+# --- Tag Categories --- #
+promoting_category = TagCategory("Promoting")
+tag_category_repository.save(promoting_category)
+
+location_category = TagCategory("Location")
+tag_category_repository.save(location_category)
+
+type_category = TagCategory("Type")
+tag_category_repository.save(type_category)
+
 # --- Promoting Category --- #
 # Brand Tag
 brand_budget = Budget(1000.00)
 budget_repository.save(brand_budget)
 
-brand_tag = Tag("Brand", "Promoting", brand_budget, account)
+brand_tag = Tag("Brand", promoting_category, brand_budget, account)
 tag_repository.save(brand_tag)
 
 # Non Brand Tag
 non_brand_budget = Budget(7500.00)
 budget_repository.save(non_brand_budget)
 
-non_brand_tag = Tag("Non Brand", "Promoting", non_brand_budget, account)
+non_brand_tag = Tag("Non Brand", promoting_category, non_brand_budget, account)
 tag_repository.save(non_brand_tag)
 
 # Retargeting Tag
 retargeting_budget = Budget(1500.00)
 budget_repository.save(retargeting_budget)
 
-retargeting_tag = Tag("Retargeting", "Promoting", retargeting_budget, account)
+retargeting_tag = Tag("Retargeting", promoting_category, retargeting_budget, account)
 tag_repository.save(retargeting_tag)
 
 # --- Type Category --- #
@@ -100,21 +112,21 @@ tag_repository.save(retargeting_tag)
 search_budget = Budget(4000.00)
 budget_repository.save(retargeting_budget)
 
-retargeting_tag = Tag("Search", "Type", retargeting_budget, account)
+retargeting_tag = Tag("Search", type_category, retargeting_budget, account)
 tag_repository.save(retargeting_tag)
 
 # Display Tag
 search_budget = Budget(1000.00)
 budget_repository.save(retargeting_budget)
 
-retargeting_tag = Tag("Display", "Type", retargeting_budget, account)
+retargeting_tag = Tag("Display", type_category, retargeting_budget, account)
 tag_repository.save(retargeting_tag)
 
 # Social Tag
 search_budget = Budget(5000.00)
 budget_repository.save(retargeting_budget)
 
-retargeting_tag = Tag("Social", "Type", retargeting_budget, account)
+retargeting_tag = Tag("Social", type_category, retargeting_budget, account)
 tag_repository.save(retargeting_tag)
 
 # --- Location Category --- #
@@ -122,14 +134,14 @@ tag_repository.save(retargeting_tag)
 uk_budget = Budget(4750.00)
 budget_repository.save(uk_budget)
 
-uk_tag = Tag("UK", "Location", uk_budget, account)
+uk_tag = Tag("UK", location_category, uk_budget, account)
 tag_repository.save(uk_tag)
 
 # Worldwide Tag
 worldwide_budget = Budget(5250.00)
 budget_repository.save(worldwide_budget)
 
-worldwide_tag = Tag("Worldwide", "Location", worldwide_budget, account)
+worldwide_tag = Tag("Worldwide", location_category, worldwide_budget, account)
 tag_repository.save(worldwide_tag)
 
 # ---------------------- Campaigns ---------------------- #

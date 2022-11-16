@@ -4,12 +4,13 @@ from models.tag import Tag
 import repositories.budget_repository as budget_repository
 import repositories.account_repository as account_repository
 import repositories.campaign_repository as campaign_repository
+import repositories.tag_category_repository as tag_category_repository
 from collections import defaultdict
 
 
 def save(tag):
-    sql = "INSERT INTO tags (name, category, budget_id, account_id) VALUES (%s, %s, %s, %s) RETURNING *"
-    values = [tag.name, tag.category, tag.budget.id, tag.account.id]
+    sql = "INSERT INTO tags (name, category_id, budget_id, account_id) VALUES (%s, %s, %s, %s) RETURNING *"
+    values = [tag.name, tag.category.id, tag.budget.id, tag.account.id]
     results = run_sql(sql, values)
     id = results[0]['id']
     tag.id = id
@@ -25,7 +26,8 @@ def select_all():
     for row in results:
         budget = budget_repository.select(row['budget_id'])
         account = account_repository.select(row['account_id'])
-        tag = Tag(row['name'], row['category'], budget, account, row['id'])
+        tag_category = tag_category_repository.select(row['category_id'])
+        tag = Tag(row['name'], tag_category, budget, account, row['id'])
         tags.append(tag)
     return tags
 
@@ -39,7 +41,8 @@ def select(id):
     if result is not None:
         budget = budget_repository.select(result['budget_id'])
         account = account_repository.select(result['account_id'])
-        tag = Tag(result['name'], result['category'], budget, account, result['id'])
+        tag_category = tag_category_repository.select(result['category_id'])
+        tag = Tag(result['name'], tag_category, budget, account, result['id'])
     return tag
 
 
@@ -55,8 +58,8 @@ def delete(id):
 
 
 def update(tag):
-    sql = "UPDATE tags SET (name, category, budget_id, account_id) = (%s, %s, %s, %s) WHERE id = %s"
-    values = [tag.name, tag.category, tag.budget.id, tag.account.id, tag.id]
+    sql = "UPDATE tags SET (name, category_id, budget_id, account_id) = (%s, %s, %s, %s) WHERE id = %s"
+    values = [tag.name, tag.category.id, tag.budget.id, tag.account.id, tag.id]
     run_sql(sql, values)
 
 
@@ -77,12 +80,13 @@ def select_all_by_account(account):
 def get_tag_categories_and_names(account):
     tags = []
 
-    sql = "SELECT category, name, id FROM tags WHERE account_id = %s"
+    sql = "SELECT category_id, name, id FROM tags WHERE account_id = %s"
     values = [account.id]
     results = run_sql(sql, values)
 
     for result in results:
-        tags.append({result["category"]: {result["name"]: result["id"]}})
+        tag_category = tag_category_repository.select(result['category_id'])
+        tags.append({tag_category.name: {result["name"]: result["id"]}}) # type: ignore
 
     # Group identical category keys and their tag names
     tags_grouped = defaultdict(list)
@@ -93,33 +97,41 @@ def get_tag_categories_and_names(account):
     return tags_grouped
 
 
-def get_tags_by_categories(account):
+def get_categories(account):
     categories = []
 
-    sql = "SELECT DISTINCT category FROM tags WHERE account_id = %s"
+    sql = "SELECT DISTINCT category_id FROM tags WHERE account_id = %s"
     values = [account.id]
     results = run_sql(sql, values)
 
     for result in results:
-        categories.append(result["category"])
+        tag_category = tag_category_repository.select(result['category_id'])
+        categories.append(tag_category) # type: ignore
+
+    return categories
+
+
+def get_tags_by_categories(account):
+    categories = get_categories(account)
 
     categories_with_names = []
 
     for category in categories:
         category_objects = []
 
-        sql = "SELECT * FROM tags WHERE account_id = %s AND category = %s"
-        values = [account.id, category] # type: ignore
+        sql = "SELECT * FROM tags WHERE account_id = %s AND category_id = %s"
+        values = [account.id, category.id] # type: ignore
         results = run_sql(sql, values)
 
         for row in results:
             budget = budget_repository.select(row['budget_id'])
             account = account_repository.select(row['account_id'])
-            tag = Tag(row['name'], row['category'], budget, account, row['id'])
+            tag_category = tag_category_repository.select(row['category_id'])
+            tag = Tag(row['name'], tag_category, budget, account, row['id'])
             category_objects.append(tag)
         
         category_dict = {}
-        category_dict[category] = category_objects
+        category_dict[category.name] = category_objects
         categories_with_names.append(category_dict)
 
     return categories_with_names
