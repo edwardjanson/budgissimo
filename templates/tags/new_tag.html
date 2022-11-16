@@ -4,10 +4,10 @@
                 <form action="/tags/new" method="post">
                     <div class="form-row">
                         <label class="category-label" for="category">Category name</label>
-                        <select class="form-inputs category-input" name="category_input_{{ tag_category }}">
+                        <select class="form-inputs category-input" name="category_input">
                             <option value="select" disabled selected>Select</option>
                             {% for tag_category in tag_categories %}
-                                <option value="{{ tag_category }}">
+                                <option value="{{ tag_category.id }}">
                                     {{ tag_category.name }}
                                 </option>
                             {% endfor %}
@@ -16,6 +16,10 @@
                     <div class="form-row">
                         <label class="tag-name-label" for="tag-name">Tag name</label>
                         <input class="form-inputs tag-name-input" type="text" name="tag_name"/>
+                    </div>
+                    <div class="form-row">
+                        <label class="monthly-budget-label" for="monthly-budget">Monthly budget</label>
+                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget"/>
                     </div>
                     <input class="form-inputs submit-btn button" name="action" type="submit" value="Create Tag"/>
                 </form>

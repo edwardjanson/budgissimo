@@ -76,13 +76,13 @@ platform_repository.save(linkedin_ads)
 
 # ---------------------- Tags ---------------------- #
 # --- Tag Categories --- #
-promoting_category = TagCategory("Promoting")
+promoting_category = TagCategory("Promoting", account)
 tag_category_repository.save(promoting_category)
 
-location_category = TagCategory("Location")
+location_category = TagCategory("Location", account)
 tag_category_repository.save(location_category)
 
-type_category = TagCategory("Type")
+type_category = TagCategory("Type", account)
 tag_category_repository.save(type_category)
 
 # --- Promoting Category --- #

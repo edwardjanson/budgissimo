@@ -35,7 +35,8 @@ CREATE TABLE platforms (
 
 CREATE TABLE tag_categories (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255),
+    account_id SERIAL NOT NULL REFERENCES accounts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tags (

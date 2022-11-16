@@ -11,8 +11,8 @@ class TestTag(unittest.TestCase):
     def setUp(self):
         self.currency_1 = Currency("British Pounds", "£", "left")
         self.budget_1 = Budget(500.00, 30.00)
-        self.tag_category_1 = TagCategory("Location")
         self.account_1 = Account(self.budget_1, self.currency_1)
+        self.tag_category_1 = TagCategory("Location", self.account_1)
         self.tag_1 = Tag("Test tag", self.tag_category_1, self.budget_1, self.account_1)
     
     def test_tag_has_name(self):

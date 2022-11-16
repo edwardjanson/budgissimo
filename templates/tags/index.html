@@ -14,9 +14,9 @@
                       <th class="other-column">Amount Spent</th>
                     </tr>
                     {% for tag_category in tag_categories%}
-                    {% for category_name, tags in tag_category.items() %}
+                    {% for category, tags in tag_category.items() %}
                     <tr>
-                      <th class="first-column sub-header">{{ category_name }}</th>
+                      <th class="first-column sub-header">{{ category.name }}</th>
                       <th class="sub-header"></th>
                       <th class="sub-header"></th>
                       <th class="sub-header"></th>

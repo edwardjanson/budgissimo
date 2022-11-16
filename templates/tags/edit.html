@@ -13,10 +13,13 @@
                             <th class="second-column">Monthly Budget</th>
                             <th class="other-column">Amount Spent</th>
                         </tr>
-                        {% for tag_category in tag_categories%}
-                        {% for category_name, tags in tag_category.items() %}
+                        {% for tag_category in tag_categories %}
+                        {% for category, tags in tag_category.items() %}
                         <tr>
-                            <th class="first-column sub-header">{{ category_name }}</th>
+                            <th class="first-column sub-header">
+                                <input type="checkbox" name="category_{{ category.id }}">
+                                <input class="form-inputs tag-name-input" type="text" name="tag_category_{{ category.id }}" value="{{ category.name }}"/>
+                            </th>
                             <th class="sub-header"></th>
                             <th class="sub-header"></th>
                         </tr>

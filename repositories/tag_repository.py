@@ -97,22 +97,8 @@ def get_tag_categories_and_names(account):
     return tags_grouped
 
 
-def get_categories(account):
-    categories = []
-
-    sql = "SELECT DISTINCT category_id FROM tags WHERE account_id = %s"
-    values = [account.id]
-    results = run_sql(sql, values)
-
-    for result in results:
-        tag_category = tag_category_repository.select(result['category_id'])
-        categories.append(tag_category) # type: ignore
-
-    return categories
-
-
 def get_tags_by_categories(account):
-    categories = get_categories(account)
+    categories = tag_category_repository.select_all_by_account(account)
 
     categories_with_names = []
 
@@ -131,7 +117,7 @@ def get_tags_by_categories(account):
             category_objects.append(tag)
         
         category_dict = {}
-        category_dict[category.name] = category_objects
+        category_dict[category] = category_objects
         categories_with_names.append(category_dict)
 
     return categories_with_names

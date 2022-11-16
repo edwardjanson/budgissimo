@@ -4,8 +4,8 @@ from models.tag_category import TagCategory
 
 
 def save(tag_category):
-    sql = "INSERT INTO tag_categories (name) VALUES (%s) RETURNING *"
-    values = [tag_category.name]
+    sql = "INSERT INTO tag_categories (name, account_id) VALUES (%s, %s) RETURNING *"
+    values = [tag_category.name, tag_category.account.id]
     results = run_sql(sql, values)
     id = results[0]['id']
     tag_category.id = id
@@ -19,7 +19,7 @@ def select_all():
     results = run_sql(sql)
 
     for row in results:
-        tag_category = TagCategory(row['name'], row['id'])
+        tag_category = TagCategory(row['name'], row['account_id'], row['id'])
         tag_categories.append(tag_category)
     return tag_categories
 
@@ -31,7 +31,7 @@ def select(id):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        tag_category = TagCategory(result['name'], result['id'])
+        tag_category = TagCategory(result['name'], result['account_id'], result['id'])
     return tag_category
 
 
@@ -47,8 +47,8 @@ def delete(id):
 
 
 def update(tag_category):
-    sql = "UPDATE tag_categories SET (name) = (%s) WHERE id = %s"
-    values = [tag_category.name, tag_category.id]
+    sql = "UPDATE tag_categories SET (name, account_id) = (%s, %s) WHERE id = %s"
+    values = [tag_category.name, tag_category.account.id, tag_category.id]
     run_sql(sql, values)
 
 

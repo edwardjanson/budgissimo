@@ -4,7 +4,9 @@ import repositories.campaign_repository as campaign_repository
 import repositories.campaign_tag_repository as campaign_tag_repository
 import repositories.account_repository as account_repository
 import repositories.budget_repository as budget_repository
+import repositories.tag_category_repository as tag_category_repository
 from models.tag import Tag
+from models.tag_category import TagCategory
 from models.budget import Budget
 
 
@@ -27,8 +29,9 @@ def new_tag():
     if tag_type:
         if tag_type == "tag":
             checked = "tag"
-            account= account_repository.select(session["account_id"])
-            tag_categories = tag_repository.get_categories(account)
+            account = account_repository.select(session["account_id"])
+            tag_categories = tag_category_repository.select_all_by_account(account)
+
             return render_template("tags/new_tag.html", checked=checked, tag_categories=tag_categories)
     else:
         return render_template("tags/new_category.html", checked=checked)
@@ -38,13 +41,32 @@ def new_tag():
 
 @tags_blueprint.route("/tags/new", methods=["POST"])
 def create_tag():
-    if request.form["tag_type"] == "Tag Category" or request.form["tag_type"] == "Tag":
-        return redirect("/tags/new")
-        
-    else:
-        if request.form["action"] == "Create Category":
-            
+    try:
+        if request.form["tag_type"] == "Tag Category" or request.form["tag_type"] == "Tag":
             return redirect("/tags/new")
+        
+    except KeyError:
+        if request.form["action"] == "Create Category":
+            tag_category_name = request.form["category_name"]
+            account = account_repository.select(session["account_id"])
+            tag_category = TagCategory(tag_category_name, account)
+            tag_category_repository.save(tag_category)
+            return redirect("/tags")
+
+        elif request.form["action"] == "Create Tag":
+            tag_category_id = request.form["category_input"]
+            tag_category = tag_category_repository.select(tag_category_id)
+            tag_name = request.form["tag_name"]
+            monthly_budget = float(request.form["monthly_budget"])
+            budget_object = Budget(monthly_budget)
+            budget = budget_repository.save(budget_object)
+            account = account_repository.select(session["account_id"])
+            tag = Tag(tag_name, tag_category, budget, account)
+
+            tag_repository.save(tag)
+            return redirect("/tags")
+    
+    return redirect("/tags/new")
 
 
 @tags_blueprint.route("/tags/<tag_id>")
@@ -71,6 +93,7 @@ def edit_all_tags():
 def update_all_tags():
     account = account_repository.select(session["account_id"])
     tags = tag_repository.select_all_by_account(account)
+    tag_categories = tag_category_repository.select_all_by_account(account)
 
     if request.form["action"] == "Apply Changes":
         for tag in tags:
@@ -85,11 +108,15 @@ def update_all_tags():
             updated_tag = Tag(tag_name, tag.category, updated_budget, tag.account, tag.id) # type: ignore
                     
             tag_repository.update(updated_tag)
-    
+
     elif request.form["action"] == "Delete Selected":
         for tag in tags:
             if request.form.get(f"tag_{tag.id}"):
                 tag_repository.delete(tag.id)
+            
+        for category in tag_categories:
+            if  request.form.get(f"category_{category.id}"):
+                tag_category_repository.delete(category.id)
 
     return redirect("/tags")
 
