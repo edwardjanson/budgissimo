@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Campaigns{% endblock %}
+
+{% block main %}
+        <main id="main-container">
+            <h1>Add Campaigns to {{ tag.name }}</h1>
+            <form action="/tags/{{ tag.id }}/campaigns/add" method="post">
+              <div class="stats-table tags-table tag-campaign-table">
+                  <table>
+                      <tr>
+                        <th class="first-column">Tags</th>
+                        <th></th>
+                      </tr>
+                      {% for platform_campaigns in platforms_campaigns %}
+                      {% for platform, campaigns in platform_campaigns.items() %}
+                      <tr>
+                        <th class="first-column sub-header">{{ platform.name }}</th>
+                        <th></th>
+                      </tr>
+                      {% for campaign in campaigns%}
+                      <tr>
+                        <td class="first-column middle">
+                          <input type="checkbox" name="campaign_{{ campaign.id }}">
+                          <span>{{ campaign.name }}</span>
+                        </td>
+                        <td></td>
+                      </tr>
+                      {% endfor %}
+                      {% endfor %}
+                      {% endfor %}
+                    </table>
+              </div>
+              <div class="buttons">
+                <input class="form-inputs button" type="submit" name="action" value="Add Campaigns"/>
+              </div>
+            </form>
+        </main>
+{% endblock %}

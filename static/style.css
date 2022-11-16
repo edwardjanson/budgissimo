@@ -263,7 +263,8 @@ table tr:nth-child(odd) .first-column {
 
 .edit-platforms .first-column .form-inputs,
 .edit-campaigns .first-column .form-inputs,
-.edit-tags .first-column .form-inputs {
+.edit-tags .first-column .form-inputs,
+.tag-campaign-table .first-column > span {
     margin-left: 0.5rem;
 }
 
@@ -345,4 +346,9 @@ table tr:nth-child(odd) .first-column {
 
 .add-campaigns {
     width: 8rem;
+}
+
+.tag-campaign-table .first-column {
+    width: 21rem;
+    text-align: left;
 }

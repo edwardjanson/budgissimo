@@ -59,6 +59,24 @@ def update(campaign):
     run_sql(sql, values)
 
 
+def select_all_by_account(account):
+    campaigns = []
+
+    sql = """SELECT campaigns.id FROM campaigns
+            INNER JOIN platforms
+                ON campaigns.platform_id = platforms.id
+            WHERE platforms.account_id = %s"""
+
+    values = [account.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        campaign = select(result["id"])
+        campaigns.append(campaign)
+    
+    return campaigns
+
+
 def select_all_by_platform(platform):
     campaigns = []
 
@@ -74,16 +92,6 @@ def select_all_by_platform(platform):
 
 
 def get_platforms_campaigns_by_tag(tag):
-    sql = """SELECT campaigns.id as campaign_id, campaigns.platform_id as platform_id FROM campaigns
-            INNER JOIN campaigns_tags
-	            ON campaigns_tags.campaign_id = campaigns.id
-            INNER JOIN tags
-	            ON campaigns_tags.tag_id = tags.id
-            WHERE tags.id = %s"""
-    
-    values = [tag.id]
-    results = run_sql(sql, values)
-
     platforms = platform_repository.select_all_by_account(tag.account)
 
     platforms_with_campaigns = []
@@ -97,6 +105,34 @@ def get_platforms_campaigns_by_tag(tag):
                 INNER JOIN tags
                     ON campaigns_tags.tag_id = tags.id
                 WHERE tags.id = %s AND platform_id = %s"""
+        values = [tag.id, platform.id] # type: ignore
+        results = run_sql(sql, values)
+
+        for row in results:
+            campaign = campaign_repository.select(row["campaign_id"])
+            campaign_objects.append(campaign)
+        
+        platform_dict = {}
+        platform_dict[platform] = campaign_objects
+        platforms_with_campaigns.append(platform_dict)
+
+    return platforms_with_campaigns
+
+
+def get_platforms_campaigns_not_with_tag(tag):
+    platforms = platform_repository.select_all_by_account(tag.account)
+
+    platforms_with_campaigns = []
+
+    for platform in platforms:
+        campaign_objects = []
+
+        sql = """SELECT DISTINCT campaigns.id as campaign_id, campaigns.platform_id as platform_id FROM campaigns
+                INNER JOIN campaigns_tags
+                    ON campaigns_tags.campaign_id = campaigns.id
+                INNER JOIN tags
+                    ON campaigns_tags.tag_id = tags.id
+                WHERE tags.id != %s AND platform_id = %s"""
         values = [tag.id, platform.id] # type: ignore
         results = run_sql(sql, values)
 
