@@ -400,3 +400,8 @@ table tr:nth-child(odd) .first-column {
     font-family: 'Abel', Arial, Helvetica, sans-serif;
     width: 11.5rem;
 }
+
+#access-denied {
+    margin: 2rem;
+    width: 95%;
+}

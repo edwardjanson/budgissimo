@@ -47,7 +47,7 @@ def platform_details(platform_id):
         return render_template("platforms/details.html", platform=platform, campaigns=campaigns, account=account)
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @platforms_blueprint.route("/platforms/edit")
@@ -92,7 +92,7 @@ def edit_platform(platform_id):
         return render_template('platforms/edit.html', platform=platform)
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @platforms_blueprint.route("/platforms/<platform_id>", methods=["POST"])
@@ -111,7 +111,7 @@ def update_platform(platform_id):
         return redirect("/platforms")
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @platforms_blueprint.route("/platforms/<platform_id>/delete", methods=["POST"])
@@ -121,4 +121,4 @@ def delete_platform(platform_id):
         return redirect("/platforms")
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")

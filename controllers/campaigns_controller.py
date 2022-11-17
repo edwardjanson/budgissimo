@@ -24,7 +24,7 @@ def new_campaign(platform_id):
         return render_template("platforms/campaigns/new.html", platform=platform, categories=categories)
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
         
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/new", methods=["POST"])
@@ -54,7 +54,7 @@ def create_campaign(platform_id):
         return redirect(f"/platforms/{platform_id}")
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/<campaign_id>")
@@ -65,7 +65,7 @@ def tag_details(platform_id, campaign_id):
         return render_template("campaigns/index.html", campaign=campaign)
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/edit")
@@ -78,7 +78,7 @@ def edit_all_campaigns(platform_id):
         return render_template("platforms/campaigns/edit.html", account=account, platform=platform, campaigns=campaigns)
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @campaigns_blueprint.route("/platforms/<platform_id>/campaigns/edit", methods=["POST"])
@@ -110,7 +110,7 @@ def edit_campaign(platform_id):
         
     
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @campaigns_blueprint.route("/campaigns/<platform_id>/campaigns/<campaign_id>", methods=["POST"])
@@ -129,7 +129,7 @@ def update_campaign(platform_id, campaign_id):
         return redirect("/campaigns/<platform_id>/campaigns")
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @campaigns_blueprint.route("/campaigns/<platform_id>/campaigns/<campaign_id>/delete", methods=["POST"])
@@ -139,4 +139,4 @@ def delete_campaign(platform_id, campaign_id):
         return redirect("/campaigns")
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")

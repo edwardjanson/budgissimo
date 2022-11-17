@@ -80,7 +80,7 @@ def tag_details(tag_id):
         return render_template('tags/details.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
         
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @tags_blueprint.route("/tags/edit")
@@ -140,7 +140,7 @@ def edit_tag(tag_id):
         return render_template('tags/edit.html', tag=tag)
 
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @tags_blueprint.route("/tags/<tag_id>/delete", methods=["POST"])
@@ -150,7 +150,7 @@ def delete_tag(tag_id):
         return redirect("/tags")
         
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @tags_blueprint.route("/tags/<tag_id>/campaigns/add")
@@ -163,7 +163,7 @@ def add_tag_to_campaigns(tag_id):
         return render_template('tags/campaigns/add.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
         
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @tags_blueprint.route("/tags/<tag_id>/campaigns/add", methods=["POST"])
@@ -193,7 +193,7 @@ def remove_tag_to_campaigns(tag_id):
         return render_template('tags/campaigns/remove.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
         
     else: 
-        return render_template("access_denied.html")
+        return redirect("/access-denied")
 
 
 @tags_blueprint.route("/tags/<tag_id>/campaigns/remove", methods=["POST"])

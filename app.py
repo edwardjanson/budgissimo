@@ -26,5 +26,11 @@ def home():
     session["account_id"] = 1
     return render_template('index.html')
 
+
+@app.route('/access-denied')
+def access_denied():
+    return render_template('access_denied.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
