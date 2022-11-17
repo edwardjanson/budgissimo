@@ -94,7 +94,7 @@ brand_tag = Tag("Brand", promoting_category, brand_budget, account)
 tag_repository.save(brand_tag)
 
 # Non Brand Tag
-non_brand_budget = Budget(7500.00, 1709.00)
+non_brand_budget = Budget(3000.00, 1709.00)
 budget_repository.save(non_brand_budget)
 
 non_brand_tag = Tag("Non Brand", promoting_category, non_brand_budget, account)
