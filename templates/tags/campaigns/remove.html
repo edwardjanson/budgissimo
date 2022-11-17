@@ -10,13 +10,13 @@
                   <table>
                       <tr>
                         <th class="first-column">Tags</th>
-                        <th></th>
+                        <th class="hidden-column"></th>
                       </tr>
                       {% for platform_campaigns in platforms_campaigns %}
                       {% for platform, campaigns in platform_campaigns.items() %}
                       <tr>
                         <th class="first-column sub-header">{{ platform.name }}</th>
-                        <th></th>
+                        <th class="hidden-column"></th>
                       </tr>
                       {% for campaign in campaigns%}
                       <tr>
@@ -24,7 +24,7 @@
                           <input type="checkbox" name="campaign_{{ campaign.id }}">
                           <span>{{ campaign.name }}</span>
                         </td>
-                        <td></td>
+                        <td class="hidden-column"></td>
                       </tr>
                       {% endfor %}
                       {% endfor %}
@@ -32,7 +32,7 @@
                     </table>
               </div>
               <div class="buttons">
-                <input class="form-inputs button" type="submit" name="action" value="Remove Campaigns"/>
+                <input class="form-inputs button add-remove-buttons" type="submit" name="action" value="Remove Campaigns"/>
               </div>
             </form>
         </main>

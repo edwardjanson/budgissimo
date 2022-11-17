@@ -405,3 +405,36 @@ table tr:nth-child(odd) .first-column {
     margin: 2rem;
     width: 95%;
 }
+
+.buttons > .add-remove-buttons {
+    width: 10rem;
+}
+
+@media (min-width: 550px) {
+    #access-denied {
+        width: 30rem;
+    }
+
+    .stats-table {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .first-column {
+        position: relative; 
+    }
+
+    .second-column {
+        padding-left: 0; 
+    }
+
+    .hidden-column {
+        background: white;
+    }
+
+    .tag-campaign-table {
+        margin-left: 2rem;
+    }
+
+}
