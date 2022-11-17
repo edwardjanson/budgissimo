@@ -4,19 +4,23 @@
 
 {% block main %}
         <main id="main-container">
-            <h1>Add a Tag</h1>
-            <div class="forms new-tag">
-                <div id="select-new-type">
-                    <span><b>Create a new:</b></span>
-                    <form action="/tags/new" method="get">
-                        <span><input name="tag_type" type="radio" value="category" onchange="this.form.submit()" 
-                                {% if checked == "tag_category"%} checked {% endif %}/>Tag Category</span>
-                        <span><input name="tag_type" type="radio" value="tag" onchange="this.form.submit()" 
-                                {% if checked == "tag" %} checked {% endif %}/>Tag</span>
-                    </form>
-                </div>
-                {% block new_tag %}{% endblock %}
+            <h1>Create a new:</h1>
+            <div class="forms select-new-type">
+                <form action="/tags/new" method="get">
+                    <div id="radio-buttons">
+                        <span class="radio-buttons">
+                            <input name="tag_type" type="radio" value="category" onchange="this.form.submit()" 
+                            {% if checked == "tag_category"%} checked {% endif %}/>
+                            <label>Tag Category</label>
+                        </span>
+                        <span class="radio-buttons">
+                            <input name="tag_type" type="radio" value="tag" onchange="this.form.submit()" 
+                            {% if checked == "tag" %} checked {% endif %}/>
+                            <label>Tag</label>
+                        </span>
+                    </div>
+                </form>
             </div>
-
+            {% block new_tag %}{% endblock %}
         </main>
 {% endblock %}

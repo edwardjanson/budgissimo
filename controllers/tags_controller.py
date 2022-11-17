@@ -117,12 +117,18 @@ def update_all_tags():
 
     elif request.form["action"] == "Delete Selected":
         for tag in tags:
-            if request.form[f"tag_{tag.id}"]:
-                tag_repository.delete(tag.id)
+            try:
+                if request.form[f"tag_{tag.id}"]:
+                    tag_repository.delete(tag.id)
+            except KeyError:
+                continue
             
         for category in tag_categories:
-            if request.form[f"category_{category.id}"]:
-                tag_category_repository.delete(category.id)
+            try:
+                if request.form[f"category_{category.id}"]:
+                    tag_category_repository.delete(category.id)
+            except KeyError:
+                continue
 
     return redirect("/tags")
 
