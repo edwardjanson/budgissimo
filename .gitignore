@@ -2,4 +2,4 @@ __pycache__
 flask_session
 credentials.json
 token.json
-venv
+venv/
