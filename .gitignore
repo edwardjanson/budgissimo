@@ -1,5 +1,4 @@
 __pycache__
 flask_session
-credentials.json
-token.json
+service_account.json
 venv/

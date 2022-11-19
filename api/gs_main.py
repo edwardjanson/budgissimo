@@ -9,9 +9,9 @@ from google.oauth2 import service_account
 SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1WpWbclQPMMG_h2oP5CvV8TcPI2ae8-EF544yX2LmB-Q'
-SAMPLE_RANGE_NAME = 'Sheet1!A:E'
-SERVICE_ACCOUNT_FILE = 'api/credentials.json'
+SPREADSHEET_ID = '1WpWbclQPMMG_h2oP5CvV8TcPI2ae8-EF544yX2LmB-Q'
+RANGE_NAME = 'Sheet1!A:E'
+SERVICE_ACCOUNT_FILE = 'api/service_account.json'
 
 
 def main():
@@ -26,8 +26,8 @@ def main():
 
         # Call data from the Sheets API
         sheet = service.spreadsheets()
-        result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                    range=SAMPLE_RANGE_NAME).execute()
+        result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                                    range=RANGE_NAME).execute()
         values = result.get('values', [0])
 
         if not values:
@@ -50,11 +50,11 @@ def main():
         }
 
         result = service.spreadsheets().values().update(
-            spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME,
+            spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME,
             valueInputOption="USER_ENTERED", body=body).execute()
         print(f"{result.get('updatedCells')} cells updated.")
         return result
-        
+
     except HttpError as err:
         print(err)
 
