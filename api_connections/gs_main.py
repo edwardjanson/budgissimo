@@ -3,9 +3,11 @@ from __future__ import print_function
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.oauth2 import service_account
-import os
+from api_connections.api_helpers import read_sheet, write_sheet, data_by_rows
+import repositories.platform_repository as platform_repository
+import repositories.campaign_repository as campaign_repository
 
-from api_helpers import *
+import os
 
 
 # If modifying these scopes, delete the file token.json.
@@ -13,11 +15,11 @@ SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.
 
 # The ID and range of a sample spreadsheet.
 SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
-RANGE_NAME = 'Sheet1!A:E'
+RANGE_NAME = 'Sheet1!A:G'
 SERVICE_ACCOUNT_FILE = 'api_connections/service_account.json'
 
 
-def main():
+def run_gs_api():
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -34,11 +36,15 @@ def main():
             ['C', 'D']
         ]
 
-        write_sheet(service, values, SPREADSHEET_ID, RANGE_NAME)
+        google_ads = platform_repository.select(1)
+        google_ads_campaigns = campaign_repository.select_all_by_platform(google_ads)
+        google_ads_data = data_by_rows(google_ads_campaigns)
+
+        write_sheet(service, google_ads_data, SPREADSHEET_ID, RANGE_NAME)
 
     except HttpError as err:
         print(err)
 
 
 if __name__ == '__main__':
-    main()
+    run_gs_api()

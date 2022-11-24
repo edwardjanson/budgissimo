@@ -9,10 +9,13 @@ import repositories.budget_repository as budget_repository
 from models.account import Account
 from models.budget import Budget
 
+from api_connections.gs_main import run_gs_api
+
 connections_blueprint = Blueprint("connections", __name__)
 
 SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 
 @connections_blueprint.route("/account/connections/google-sheets")
 def account():
+    run_gs_api()
     return render_template("accounts/connections/gs_data.html", spreadsheet_id=SPREADSHEET_ID)
