@@ -2,11 +2,17 @@
 
 {% block title %}Create Platform{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Add a Platform</h1>
             <div class="forms new-platform">
-                <form action="/platforms/new" method="post">
+                <form action="/accounts/{{ account.id }}/platforms/new" method="post">
                     <div class="form-row">
                         <label class="platform-name-label" for="platform-name">Platform Name</label>
                         <input class="form-inputs mplatform-name-input" type="text" name="platform_name"/>

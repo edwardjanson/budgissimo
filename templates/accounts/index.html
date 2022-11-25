@@ -1,32 +1,38 @@
 {% extends "layout.html" %}
 
-{% block title %}Account{% endblock %}
+{% block title %}Your Accounts{% endblock %}
+
+{% block nav_accounts %}<li><a href="/accounts">accounts</a></li>{% endblock %}
 
 {% block main %}
         <main id="main-container">
-            <h1>Your Account</h1>
+            <h1>Your Accounts</h1>
             <div>
             <div class="stats-table accounts-table">
                 <table>
                     <tr>
-                      <th class="other-column">Monthly Budget</th>
+                      <th class="first-column">Accounts</th>
+                      <th class="second-column">Monthly Budget</th>
                       <th class="other-column">Daily Budget</th>
                       <th class="other-column">Amount Spent</th>
                     </tr>
+                    {% for account in accounts %}
                     <tr>
-                      <td class="other-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.monthly_budget) }}</td>
-                      <td>{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.daily_budget) }}</td>
+                      <td class="first-column"><a href="/accounts/{{ account.id }}/platforms">{{ account.name }}</a></td>
+                      <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.monthly_budget) }}</td>
+                      <td class="other-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.daily_budget) }}</td>
                       {% if account.budget.amount_spent %}
-                        <td>{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.amount_spent) }}</th>
+                        <td class="other-column">{{ account.currency.symbol }}{{ "%.2f"|format(account.budget.amount_spent) }}</th>
                       {% else %}
-                        <td>-</th>
+                        <td class="other-column">-</th>
                       {% endif %}
                     </tr>
+                    {% endfor %}
                   </table>
             </div>
             <div class="buttons">
-              <a href="/account/edit" class="button">Edit</a>
-              <a href="/account/" class="button">Logout</a>
+              <a href="/accounts/edit" class="button">Edit</a>
+              <a href="/accounts/new" class="button">New</a>
             </div>
         </main>
 {% endblock %}

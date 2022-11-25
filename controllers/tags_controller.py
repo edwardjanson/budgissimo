@@ -14,34 +14,35 @@ from models.budget import Budget
 tags_blueprint = Blueprint("tags", __name__)
 
 
-@tags_blueprint.route("/tags")
-def tags():
-    account = account_repository.select(session["account_id"])
+@tags_blueprint.route("/accounts/<account_id>/tags")
+def tags(account_id):
+    account = account_repository.select(account_id)
     tag_categories = tag_repository.get_tags_by_categories(account)
 
     return render_template("tags/index.html", tag_categories=tag_categories, account=account)
 
 
-@tags_blueprint.route("/tags/new")
-def new_tag():
+@tags_blueprint.route("/accounts/<account_id>/tags/new")
+def new_tag(account_id):
+    account = account_repository.select(account_id)
     tag_type = request.args.get("tag_type")
     checked = "tag_category"
 
     if tag_type:
         if tag_type == "tag":
             checked = "tag"
-            account = account_repository.select(session["account_id"])
+            account = account_repository.select(account_id)
             tag_categories = tag_category_repository.select_all_by_account(account)
 
-            return render_template("tags/new_tag.html", checked=checked, tag_categories=tag_categories)
+            return render_template("tags/new_tag.html", checked=checked, tag_categories=tag_categories, account=account)
     else:
-        return render_template("tags/new_category.html", checked=checked)
+        return render_template("tags/new_category.html", checked=checked, account=account)
 
-    return render_template("tags/new_category.html", checked=checked)
+    return render_template("tags/new_category.html", checked=checked, account=account)
 
 
-@tags_blueprint.route("/tags/new", methods=["POST"])
-def create_tag():
+@tags_blueprint.route("/accounts/<account_id>/tags/new", methods=["POST"])
+def create_tag(account_id):
     try:
         if request.form["tag_type"] == "Tag Category" or request.form["tag_type"] == "Tag":
             return redirect("/tags/new")
@@ -49,7 +50,7 @@ def create_tag():
     except KeyError:
         if request.form["action"] == "Create Category":
             tag_category_name = request.form["category_name"]
-            account = account_repository.select(session["account_id"])
+            account = account_repository.select(account_id)
             tag_category = TagCategory(tag_category_name, account)
             tag_category_repository.save(tag_category)
             return redirect("/tags")
@@ -61,39 +62,35 @@ def create_tag():
             monthly_budget = float(request.form["monthly_budget"])
             budget_object = Budget(monthly_budget)
             budget = budget_repository.save(budget_object)
-            account = account_repository.select(session["account_id"])
+            account = account_repository.select(account_id)
             tag = Tag(tag_name, tag_category, budget, account)
 
             tag_repository.save(tag)
             return redirect("/tags")
     
-    return redirect("/tags/new")
+    return redirect(f"/accounts/{account_id}/tags/new")
 
 
-@tags_blueprint.route("/tags/<tag_id>")
-def tag_details(tag_id):
-    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
-        account = account_repository.select(session["account_id"])
-        tag = tag_repository.select(tag_id)
-        platforms_campaigns = campaign_repository.get_platforms_campaigns_by_tag(tag)
+@tags_blueprint.route("/accounts/<account_id>/tags/<tag_id>")
+def tag_details(account_id, tag_id):
+    account = account_repository.select(account_id)
+    tag = tag_repository.select(tag_id)
+    platforms_campaigns = campaign_repository.get_platforms_campaigns_by_tag(tag)
 
-        return render_template('tags/details.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
-        
-    else: 
-        return redirect("/access-denied")
+    return render_template('tags/details.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
 
 
-@tags_blueprint.route("/tags/edit")
-def edit_all_tags():
-    account = account_repository.select(session["account_id"])
+@tags_blueprint.route("/accounts/<account_id>/tags/edit")
+def edit_all_tags(account_id):
+    account = account_repository.select(account_id)
     tag_categories = tag_repository.get_tags_by_categories(account)
 
     return render_template("tags/edit.html", tag_categories=tag_categories, account=account)
 
 
-@tags_blueprint.route("/tags/edit", methods=["POST"])
-def update_all_tags():
-    account = account_repository.select(session["account_id"])
+@tags_blueprint.route("/accounts/<account_id>/tags/edit", methods=["POST"])
+def update_all_tags(account_id):
+    account = account_repository.select(account_id)
     tags = tag_repository.select_all_by_account(account)
     tag_categories = tag_category_repository.select_all_by_account(account)
 
@@ -130,45 +127,21 @@ def update_all_tags():
             except KeyError:
                 continue
 
-    return redirect("/tags")
+    return redirect(f"/accounts/{account_id}/tags")
 
 
-@tags_blueprint.route("/tags/<tag_id>/edit")
-def edit_tag(tag_id):
-    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
-        tag = tag_repository.select(tag_id)
-        return render_template('tags/edit.html', tag=tag)
+@tags_blueprint.route("/accounts/<account_id>/tags/<tag_id>/campaigns/add")
+def add_tag_to_campaigns(account_id, tag_id):
+    account = account_repository.select(account_id)
+    tag = tag_repository.select(tag_id)
+    platforms_campaigns = campaign_repository.get_platforms_campaigns_not_with_tag(tag)
 
-    else: 
-        return redirect("/access-denied")
-
-
-@tags_blueprint.route("/tags/<tag_id>/delete", methods=["POST"])
-def delete_tag(tag_id):
-    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
-        tag_repository.delete(tag_id)
-        return redirect("/tags")
-        
-    else: 
-        return redirect("/access-denied")
+    return render_template('tags/campaigns/add.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
 
 
-@tags_blueprint.route("/tags/<tag_id>/campaigns/add")
-def add_tag_to_campaigns(tag_id):
-    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
-        account = account_repository.select(session["account_id"])
-        tag = tag_repository.select(tag_id)
-        platforms_campaigns = campaign_repository.get_platforms_campaigns_not_with_tag(tag)
-
-        return render_template('tags/campaigns/add.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
-        
-    else: 
-        return redirect("/access-denied")
-
-
-@tags_blueprint.route("/tags/<tag_id>/campaigns/add", methods=["POST"])
-def add_tag_to_campaigns_post(tag_id):
-    account = account_repository.select(session["account_id"])
+@tags_blueprint.route("/accounts/<account_id>/tags/<tag_id>/campaigns/add", methods=["POST"])
+def add_tag_to_campaigns_post(account_id, tag_id):
+    account = account_repository.select(account_id)
     tag = tag_repository.select(tag_id)
     campaigns = campaign_repository.select_all_by_account(account)
                 
@@ -180,25 +153,21 @@ def add_tag_to_campaigns_post(tag_id):
         except KeyError:
             continue
 
-    return redirect(f"/tags/{tag_id}")
+    return redirect(f"/accounts/{account_id}/tags/{tag_id}")
 
 
-@tags_blueprint.route("/tags/<tag_id>/campaigns/remove")
-def remove_tag_to_campaigns(tag_id):
-    if account_repository.request_allowed(session["account_id"], "tag_id", tag_id):
-        account = account_repository.select(session["account_id"])
-        tag = tag_repository.select(tag_id)
-        platforms_campaigns = campaign_repository.get_platforms_campaigns_by_tag(tag)
+@tags_blueprint.route("/accounts/<account_id>/tags/<tag_id>/campaigns/remove")
+def remove_tag_to_campaigns(account_id, tag_id):
+    account = account_repository.select(account_id)
+    tag = tag_repository.select(tag_id)
+    platforms_campaigns = campaign_repository.get_platforms_campaigns_by_tag(tag)
 
-        return render_template('tags/campaigns/remove.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
-        
-    else: 
-        return redirect("/access-denied")
+    return render_template('tags/campaigns/remove.html', platforms_campaigns=platforms_campaigns, tag=tag, account=account)
 
 
-@tags_blueprint.route("/tags/<tag_id>/campaigns/remove", methods=["POST"])
-def remove_tag_to_campaigns_post(tag_id):
-    account = account_repository.select(session["account_id"])
+@tags_blueprint.route("/accounts/<account_id>/tags/<tag_id>/campaigns/remove", methods=["POST"])
+def remove_tag_to_campaigns_post(account_id, tag_id):
+    account = account_repository.select(account_id)
     tag = tag_repository.select(tag_id)
     campaigns = campaign_repository.select_all_by_account(account)
                 
@@ -210,4 +179,4 @@ def remove_tag_to_campaigns_post(tag_id):
         except KeyError:
             continue
 
-    return redirect(f"/tags/{tag_id}")
+    return redirect(f"/accounts/{account_id}/tags/{tag_id}")

@@ -2,11 +2,17 @@
 
 {% block title %}Create Campaign{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Add a {{ platform.name }} Campaign</h1>
             <div class="forms new-campaign">
-                <form action="/platforms/{{ platform.id }}/campaigns/new" method="post">
+                <form action="/accounts/{{ account.id }}/platforms/{{ platform.id }}/campaigns/new" method="post">
                     <div class="form-row">
                         <label class="platform-name-label" for="platform-name">Campaign name</label>
                         <input class="form-inputs mplatform-name-input" type="text" name="campaign_name"/>

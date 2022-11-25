@@ -22,13 +22,14 @@ CREATE TABLE budgets (
 
 CREATE TABLE accounts (
     id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE,
     currency_id SERIAL NOT NULL REFERENCES currencies(id)
 );
 
 CREATE TABLE platforms (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
     account_id SERIAL NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE
 );
@@ -41,7 +42,7 @@ CREATE TABLE tag_categories (
 
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
     category_id SERIAL NOT NULL REFERENCES tag_categories(id) ON DELETE CASCADE,
     account_id SERIAL NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE

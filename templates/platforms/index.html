@@ -2,6 +2,12 @@
 
 {% block title %}All Platforms{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Your Platforms</h1>
@@ -23,7 +29,7 @@
                       {% if platform.budget.amount_spent %}
                         {{ amount_spent_totals.append(platform.budget.amount_spent) or "" }}
                       {% endif %}
-                      <td class="first-column"><a href="/platforms/{{ platform.id }}">{{ platform.name }}</a></td>
+                      <td class="first-column"><a href="/accounts/{{ account.id }}/platforms/{{ platform.id }}">{{ platform.name }}</a></td>
                       <td class="second-column">{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.monthly_budget) }}</td>
                       <td>{{ account.currency.symbol }}{{ "%.2f"|format(platform.budget.daily_budget) }}</td>
                       {% if platform.budget.amount_spent %}
@@ -46,8 +52,8 @@
                   </table>
             </div>
             <div class="buttons">
-              <a href="/platforms/edit" class="button">Edit</a>
-              <a href="/platforms/new" class="button">New</a>
+              <a href="/accounts/{{ account.id }}/platforms/edit" class="button">Edit</a>
+              <a href="/accounts/{{ account.id }}/platforms/new" class="button">New</a>
             </div>
         </main>
 {% endblock %}

@@ -2,10 +2,16 @@
 
 {% block title %}Edit Tags{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Edit Your Tags</h1>
-            <form action="/tags/edit" method="post">
+            <form action="/accounts/{{ account.id }}/tags/edit" method="post">
                 <div class="stats-table tags-table edit-tags">
                     <table>
                         <tr>

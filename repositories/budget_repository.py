@@ -53,17 +53,19 @@ def update(budget):
     run_sql(sql, values)
 
 
-def combine_platforms(account):
-    combined_budget = None
-    sql = """SELECT SUM(budgets.monthly_budget) as monthly_budget, 
-            SUM(budgets.amount_spent) as amount_spent 
-            FROM platforms
-            INNER JOIN budgets
-	            ON platforms.budget_id = budgets.id
-            WHERE account_id = %s;"""
-    values = [account.id]
-    result = run_sql(sql, values)[0]
+# def combined_platforms_by_account():
+#     budgets = []
+#     sql = """SELECT SUM(budgets.monthly_budget) as monthly_budget, 
+#             SUM(budgets.amount_spent) as amount_spent,
+#             platforms.account_id as account_id 
+#             FROM platforms
+#             INNER JOIN budgets
+# 	            ON platforms.budget_id = budgets.id
+# 	        GROUP BY account_id"""
+#     results = run_sql(sql)
 
-    if result is not None:
-        combined_budget = Budget(result["monthly_budget"], result["amount_spent"])
-    return combined_budget
+#     for row in results:
+#         budget = Budget(row['monthly_budget'], row['amount_spent'])
+#         budgets.append(budget)
+    
+#     return budgets

@@ -2,10 +2,16 @@
 
 {% block title %}Edit Campaigns{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Edit Campaigns</h1>
-            <form action="/platforms/{{ platform.id }}/campaigns/edit" method="post">
+            <form action="/accounts/{{ account.id }}/platforms/{{ platform.id }}/campaigns/edit" method="post">
                 <div class="stats-table edit-campaigns">
                     <table>
                         <tr>

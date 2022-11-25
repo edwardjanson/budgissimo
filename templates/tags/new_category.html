@@ -1,7 +1,13 @@
 {% extends "/tags/new.html" %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block new_tag %} 
-                <form class="forms add-tags" action="/tags/new" method="post">
+                <form class="forms add-tags" action="/accounts/{{ account.id }}/tags/new" method="post">
                     <div class="form-row">
                         <label class="category-name-label" for="category-name">Category name</label>
                         <input class="form-inputs category-name-input" type="text" name="category_name"/>

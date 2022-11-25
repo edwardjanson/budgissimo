@@ -2,6 +2,12 @@
 
 {% block title %}All Tags{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Your Tags</h1>
@@ -32,7 +38,7 @@
                       {% if tag.budget.amount_spent %}
                         {{ amount_spent_totals.append(tag.budget.amount_spent) or "" }}
                       {% endif %}
-                      <td class="first-column middle"><a href="/tags/{{ tag.id }}">{{ tag.name }}</a></td>
+                      <td class="first-column middle"><a href="/accounts/{{ account.id }}/tags/{{ tag.id }}">{{ tag.name }}</a></td>
                       <td class="second-column middle">{{ account.currency.symbol }}{{ "%.2f"|format(tag.budget.monthly_budget) }}</td>
                       <td class="other-column middle">{{ account.currency.symbol }}{{ "%.2f"|format(tag.budget.daily_budget) }}</td>
                       {% if tag.budget.amount_spent %}
@@ -57,8 +63,8 @@
                   </table>
             </div>
             <div class="buttons">
-              <a href="/tags/edit" class="button">Edit</a>
-              <a href="/tags/new" class="button">New</a>
+              <a href="/accounts/{{ account.id }}/tags/edit" class="button">Edit</a>
+              <a href="/accounts/{{ account.id }}/tags/new" class="button">New</a>
             </div>
         </main>
 {% endblock %}

@@ -2,28 +2,36 @@
 
 {% block title %}Create Account{% endblock %}
 
+{% block nav_accounts %}<li><a href="/accounts">accounts</a></li>{% endblock %}
+
 {% block main %}
         <main id="main-container">
-            <h1>Create an Account</h1>
-            <div class="intro-text">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis sequi eum veniam consequuntur aliquid molestias quidem, doloribus ullam omnis ducimus.</p>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est perspiciatis at, dolor aliquid laboriosam totam!</p>
-            </div>
-            <div class="forms">
-                <form action="/account/new" method="post">
+            <h1>Create Account</h1>
+            <div class="forms edit-account">
+                <form action="/accounts/new" method="post">
                     <div class="form-row">
-                        <label class="name-label" for="name">Your name</label>
-                        <input class="form-inputs name-input" type="text" name="name" id="name">
+                        <label class="monthly-budget-label" for="monthly-budget">Account Name</label>
+                        <input class="form-inputs account-name-input" type="text" name="account_name""/>
                     </div>
                     <div class="form-row">
-                        <label class="email-label" for="email">Your email</label>
-                        <input class="form-inputs email-input" type="email" name="email" id="email">
+                        <label class="monthly-budget-label" for="monthly-budget">Monthly Budget</label>
+                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget"/>
                     </div>
                     <div class="form-row">
-                        <label class="password-label" for="password">Password</label>
-                        <input class="form-inputs password-input" type="password" name="password" id="password">
+                        <label class="amount-spent-label" for="amount-spent">Amount Spent</label>
+                        <input class="form-inputs amount-spent-input" type="number" name="amount_spent"/>
                     </div>
-                    <input class="form-inputs submit-btn button" type="submit" value="Create Account">
+                    <div class="form-row">
+                    <label class="currency-label" for="currency">Currency</label>
+                        <select class="form-inputs currency-input" name="currency_id">
+                        {% for currency in currencies %}
+                            <option value="{{ currency.id }}">
+                                {{ currency.name }}
+                            </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <input class="form-inputs submit-btn button" type="submit" value="Create Account"/>
                 </form>
             </div>
         </main>

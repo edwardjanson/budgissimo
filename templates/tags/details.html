@@ -2,6 +2,12 @@
 
 {% block title %}{{ tag.name }} Campaigns{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>{{ tag.name }} Campaigns</h1>
@@ -16,7 +22,7 @@
                     {% for platform_campaigns in platforms_campaigns %}
                     {% for platform, campaigns in platform_campaigns.items() %}
                     <tr>
-                      <th class="first-column sub-header"><a href="/platforms/{{ platform.id }}">{{ platform.name }}</a></th>
+                      <th class="first-column sub-header"><a href="/accounts/{{ account.id }}/platforms/{{ platform.id }}">{{ platform.name }}</a></th>
                       <th class="sub-header"></th>
                       <th class="sub-header"></th>
                       <th class="sub-header"></th>
@@ -56,8 +62,8 @@
                   </table>
               </div>
               <div class="buttons">
-                <a href="/tags/{{ tag.id }}/campaigns/add" class="button add-remove-campaigns">Add Campaigns</a>
-                <a href="/tags/{{ tag.id }}/campaigns/remove" class="button add-remove-campaigns">Remove Campaigns</a>
+                <a href="/accounts/{{ account.id }}/tags/{{ tag.id }}/campaigns/add" class="button add-remove-campaigns">Add Campaigns</a>
+                <a href="/accounts/{{ account.id }}/tags/{{ tag.id }}/campaigns/remove" class="button add-remove-campaigns">Remove Campaigns</a>
               </div>
         </main>
 {% endblock %}

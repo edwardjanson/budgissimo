@@ -2,6 +2,12 @@
 
 {% block title %}{{ platform.name }} Campaigns{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>{{ platform.name }} Campaigns</h1>
@@ -46,8 +52,8 @@
                   </table>
               </div>
               <div class="buttons">
-                <a href="/platforms/{{ platform.id }}/campaigns/edit" class="button">Edit</a>
-                <a href="/platforms/{{ platform.id }}/campaigns/new" class="button">New</a>
+                <a href="/accounts/{{ account.id }}/platforms/{{ platform.id }}/campaigns/edit" class="button">Edit</a>
+                <a href="/accounts/{{ account.id }}/platforms/{{ platform.id }}/campaigns/new" class="button">New</a>
               </div>
         </main>
 {% endblock %}

@@ -2,11 +2,17 @@
 
 {% block title %}Create Tag{% endblock %}
 
+{% block nav_other %}
+<li><a href="/accounts">accounts</a></li>
+<li><a href="/accounts/{{ account.id }}/platforms">platforms</a></li>
+<li><a href="/accounts/{{ account.id }}/tags">tags</a></li>
+{% endblock %}
+
 {% block main %}
         <main id="main-container">
             <h1>Create a new:</h1>
             <div class="forms select-new-type">
-                <form action="/tags/new" method="get">
+                <form action="/accounts/{{ account.id }}/tags/new" method="get">
                     <div id="radio-buttons">
                         <span class="radio-buttons">
                             <input name="tag_type" type="radio" value="category" onchange="this.form.submit()" 

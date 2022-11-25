@@ -1,6 +1,7 @@
 class Account:
 
-    def __init__(self, budget, currency, id=None):
+    def __init__(self, name, budget, currency, id=None):
+        self.name = name
         self.budget = budget
         self.currency = currency
         self.id = id

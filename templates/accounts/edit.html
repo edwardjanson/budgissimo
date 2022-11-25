@@ -1,39 +1,56 @@
 {% extends "layout.html" %}
 
-{% block title %}Edit Account{% endblock %}
+{% block title %}Edit Accounts{% endblock %}
+
+{% block nav_accounts %}<li><a href="/accounts">accounts</a></li>{% endblock %}
 
 {% block main %}
         <main id="main-container">
-            <h1>Edit Account</h1>
-            <div class="forms edit-account">
-                <form action="/account/edit" method="post">
-                    <div class="form-row">
-                        <label class="monthly-budget-label" for="monthly-budget">Monthly Budget</label>
-                        <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget" value="{{ '%.2f'|format(account.budget.monthly_budget) }}"/>
-                    </div>
-                    <div class="form-row">
-                        <label class="amount-spent-label" for="amount-spent">Amount Spent</label>
-                        <input class="form-inputs amount-spent-input" type="number" name="amount_spent"
-                        {% if account.budget.amount_spent %}
+            <h1>Edit Platforms</h1>
+            <form action="/accounts/edit" method="post">
+                <div class="stats-table edit-platforms">
+                    <table>
+                        <tr>
+                        <th class="first-column">Accounts</th>
+                        <th class="second-column">Monthly Budget</th>
+                        <th class="other-column">Amount Spent</th>
+                        <th class="other-column">Currency</th>
+                        </tr>
+                        {% for account in accounts %}
+                        <tr>
+                        <td class="first-column">
+                            <input type="checkbox" name="account_{{ account.id }}">
+                            <input class="form-inputs account-name-input" type="text" name="account_name_{{ account.id }}" value="{{ account.name }}"/>
+                        </td>
+                        <td class="second-column">
+                            <input class="form-inputs monthly-budget-input" type="number" name="monthly_budget_{{ account.id }}" value="{{ '%.2f'|format(account.budget.monthly_budget) }}"/>
+                        </td>
+                        <td class="other-column">
+                            <input class="form-inputs amount-spent-input" type="number" name="amount_spent_{{ account.id }}" 
+                            {% if account.budget.amount_spent %}
                             value="{{ '%.2f'|format(account.budget.amount_spent) }}"
-                        {% endif %}
-                        />
-                    </div>
-                    <div class="form-row">
-                    <label class="currency-label" for="currency">Currency</label>
-                        <select class="form-inputs currency-input" name="currency_id">
-                        {% for currency in currencies %}
-                            <option value="{{ currency.id }}"
-                            {% if account.currency.id == currency.id %} 
-                            selected="selected" 
-                            {% endif %}>
-                            {{ currency.name }}
-                            </option>
+                            {% endif %}
+                            />
+                        </td>
+                        <td class="other-column">
+                            <select class="form-inputs currency-input" name="currency_id">
+                                {% for currency in currencies %}
+                                    <option value="{{ currency.id }}"
+                                    {% if account.currency.id == currency.id %} 
+                                    selected="selected" 
+                                    {% endif %}>
+                                    {{ currency.name }}
+                                    </option>
+                                {% endfor %}
+                        </td>
+                        </tr>
                         {% endfor %}
-                        </select>
-                    </div>
-                    <input class="form-inputs submit-btn button" type="submit" value="Apply Changes"/>
-                </form>
-            </div>
+                    </table>
+                </div>
+                <div class="buttons">
+                    <input class="form-inputs button" type="submit" name="action" value="Apply Changes"/>
+                    <input class="form-inputs button" type="submit" name="action" value="Delete Selected"/>
+                </div>
+            </form>
         </main>
 {% endblock %}

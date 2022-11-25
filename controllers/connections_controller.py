@@ -16,22 +16,23 @@ connections_blueprint = Blueprint("connections", __name__)
 SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 
 
-@connections_blueprint.route("/account/connections/google-sheets")
-def google_sheets():
-    return render_template("accounts/connections/gs_data.html", spreadsheet_id=SPREADSHEET_ID)
+@connections_blueprint.route("/accounts/<account_id>/connections/google-sheets")
+def google_sheets(account_id):
+    account = account_repository.select(account_id)
+    return render_template("accounts/connections/gs_data.html", spreadsheet_id=SPREADSHEET_ID, account=account)
 
 
-@connections_blueprint.route("/account/connections/google-sheets/import")
-def import_data():
+@connections_blueprint.route("/accounts/<account_id>/connections/google-sheets/import")
+def import_data(account_id):
     google_ads = platform_repository.select(1)
     run_gs_api(google_ads, "read")
-    return redirect("/account/connections/google-sheets")
+    return redirect(f"/accounts/{account_id}/connections/google-sheets")
 
 
-@connections_blueprint.route("/account/connections/google-sheets/export")
-def export_data():
+@connections_blueprint.route("/accounts/<account_id>/connections/google-sheets/export")
+def export_data(account_id):
     google_ads = platform_repository.select(1)
     run_gs_api(google_ads, "write")
-    return redirect("/account/connections/google-sheets")
+    return redirect(f"/accounts/{account_id}/connections/google-sheets")
 
 
