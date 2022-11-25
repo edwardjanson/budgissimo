@@ -1,5 +1,6 @@
 from models.budget import Budget
 from models.platform import Platform
+import repositories.campaign_repository as campaign_repository
 
 
 def read_sheet(service, spreadsheet_id, range_name):
@@ -31,24 +32,24 @@ def write_sheet(service, values, spreadsheet_id, range_name):
         return result
 
 
-def data_by_rows(platform_campaigns):
-    data_by_rows = []
-    sheet_headers = []
+def data_by_rows(platform):
+    campaigns = campaign_repository.select_all_by_platform(platform)
 
-    for attribute, value in platform_campaigns[0].__dict__.items():
-        if attribute != "id":
-                sheet_headers.append(attribute)
+    data_by_rows = []
+
+    sheet_headers = ["Campaign Name", "Monthly Budget", "Amount Spent"]
     
     data_by_rows.append(sheet_headers)
     
-    for campaign in platform_campaigns:
+    for campaign in campaigns:
         cell_values = []
         for attribute, value in campaign.__dict__.items():
             if attribute != "id":
                 if type(value) is Budget:
                     cell_values.append(value.monthly_budget)
+                    cell_values.append(value.amount_spent)
                 elif type(value) is Platform:
-                    cell_values.append(value.name)
+                    pass
                 else:
                     cell_values.append(value)
 

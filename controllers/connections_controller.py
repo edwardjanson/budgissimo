@@ -17,5 +17,6 @@ SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 
 @connections_blueprint.route("/account/connections/google-sheets")
 def account():
-    run_gs_api()
+    google_ads = platform_repository.select(1)
+    run_gs_api(google_ads, "write")
     return render_template("accounts/connections/gs_data.html", spreadsheet_id=SPREADSHEET_ID)
