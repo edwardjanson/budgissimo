@@ -8,7 +8,7 @@
         <main id="main-container">
             <h1>Edit Platforms</h1>
             <form action="/accounts/edit" method="post">
-                <div class="stats-table edit-platforms">
+                <div class="stats-table edit-account">
                     <table>
                         <tr>
                         <th class="first-column">Accounts</th>
@@ -33,7 +33,7 @@
                             />
                         </td>
                         <td class="other-column">
-                            <select class="form-inputs currency-input" name="currency_id">
+                            <select class="form-inputs currency-input" name="currency_id_{{ account.id }}">
                                 {% for currency in currencies %}
                                     <option value="{{ currency.id }}"
                                     {% if account.currency.id == currency.id %} 

@@ -251,7 +251,6 @@ table tr:nth-child(odd) .first-column {
     border-collapse: collapse;
 }
 
-.accounts-table tr:last-child td,
 .edit-platforms tr:last-child td,
 .platforms-table tr:last-child td,
 .edit-campaigns tr:last-child td {

@@ -53,7 +53,7 @@ def update_account():
             account_name = request.form[f"account_name_{account.id}"]
             monthly_budget = float(request.form[f"monthly_budget_{account.id}"])
             amount_spent = float(request.form[f"amount_spent_{account.id}"]) if request.form[f"amount_spent_{account.id}"] else None
-            currency_id = request.form["currency_id"]
+            currency_id = request.form[f"currency_id_{account.id}"]
 
             account = account_repository.select(account.id)
             updated_budget = Budget(monthly_budget, amount_spent, account.budget.id) # type: ignore
