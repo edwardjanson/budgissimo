@@ -148,3 +148,15 @@ def get_platforms_campaigns_not_with_tag(tag):
         platforms_with_campaigns.append(platform_dict)
 
     return platforms_with_campaigns
+
+
+def select_by_campaign_name(campaign_name, platform):
+    campaign = None
+    sql = "SELECT * FROM campaigns WHERE name = %s AND platform_id = %s"
+    values = [campaign_name, platform.id]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        budget = budget_repository.select(result['budget_id'])
+        campaign = Campaign(result['name'], budget, platform, result['id'])
+    return campaign

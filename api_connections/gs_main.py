@@ -27,10 +27,10 @@ def run_gs_api(platform, request):
         service = build('sheets', 'v4', credentials=credentials)
 
         if request == "read":
-            read_sheet(service, SPREADSHEET_ID, RANGE_NAME)
+            read_sheet(service, SPREADSHEET_ID, RANGE_NAME, platform)
         elif request == "write":
             platform_data = data_by_rows(platform)
-            write_sheet(service, platform_data, SPREADSHEET_ID, RANGE_NAME)
+            write_sheet(service, SPREADSHEET_ID, RANGE_NAME, platform_data)
 
     except HttpError as err:
         print(err)
