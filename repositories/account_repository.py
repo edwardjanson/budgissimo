@@ -7,8 +7,8 @@ import repositories.currency_repository as currency_repository
 
 
 def save(account):
-    sql = "INSERT INTO accounts (name, budget_id, currency_id) VALUES (%s, %s, %s) RETURNING *"
-    values = [account.name, account.budget.id, account.currency.id]
+    sql = "INSERT INTO accounts (name, budget_id, currency_id, spreadsheet_id) VALUES (%s, %s, %s, %s) RETURNING *"
+    values = [account.name, account.budget.id, account.currency.id, account.spreadsheet_id]
     results = run_sql(sql, values)
     id = results[0]['id']
     account.id = id
@@ -24,7 +24,7 @@ def select_all():
     for row in results:
         budget = budget_repository.select(row['budget_id'])
         currency = currency_repository.select(row['currency_id'])
-        account = Account(row['name'], budget, currency, row['id'])
+        account = Account(row['name'], budget, currency, row['spreadsheet_id'],row['id'])
         accounts.append(account)
     return accounts
 
@@ -38,7 +38,7 @@ def select(id):
     if result is not None:
         budget = budget_repository.select(result['budget_id'])
         currency = currency_repository.select(result['currency_id'])
-        account = Account(result['name'], budget, currency, result['id'])
+        account = Account(result['name'], budget, currency, result['spreadsheet_id'], result['id'])
 
     return account
 
@@ -55,6 +55,6 @@ def delete(id):
 
 
 def update(account):
-    sql = "UPDATE accounts SET (name, budget_id, currency_id) = (%s, %s, %s) WHERE id = %s"
-    values = [account.name, account.budget.id, account.currency.id, account.id]
+    sql = "UPDATE accounts SET (name, budget_id, currency_id) = (%s, %s, %s, %s) WHERE id = %s"
+    values = [account.name, account.budget.id, account.currency.id, account.spreadsheet_id, account.id]
     run_sql(sql, values)

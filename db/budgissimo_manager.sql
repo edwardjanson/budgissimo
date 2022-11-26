@@ -23,6 +23,7 @@ CREATE TABLE budgets (
 CREATE TABLE accounts (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    spreadsheet_id VARCHAR(255) UNIQUE,
     budget_id SERIAL NOT NULL REFERENCES budgets(id) ON DELETE CASCADE,
     currency_id SERIAL NOT NULL REFERENCES currencies(id)
 );

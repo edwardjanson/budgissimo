@@ -39,9 +39,15 @@ def read_sheet(service, spreadsheet_id, range_name, platform):
             budget_repository.update(updated_budget)
 
 
-def write_sheet(service, spreadsheet_id, range_name, values):
+def write_sheet(service, spreadsheet_id, range_name, platform):
+        request = service.spreadsheets().values().clear(
+            spreadsheetId=spreadsheet_id, range=range_name)
+        request.execute()
+
+        platform_data = data_by_rows(platform)
+
         body = {
-            'values': values
+            'values': platform_data
         }
 
         result = service.spreadsheets().values().update(
@@ -65,12 +71,8 @@ def data_by_rows(platform):
         for attribute, value in campaign.__dict__.items():
             if attribute != "id":
                 if type(value) is Budget:
-                    if not value.amount_spent:
-                        cell_values.append(value.monthly_budget)
-                        cell_values.append("")
-                    else:
-                        cell_values.append(value.monthly_budget)
-                        cell_values.append(value.amount_spent)
+                    cell_values.append(value.monthly_budget)
+                    cell_values.append(value.amount_spent)
                 elif type(value) is Platform:
                     pass
                 else:

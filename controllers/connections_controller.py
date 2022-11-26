@@ -24,15 +24,17 @@ def google_sheets(account_id):
 
 @connections_blueprint.route("/accounts/<account_id>/connections/google-sheets/import")
 def import_data(account_id):
+    account = account_repository.select(account_id)
     google_ads = platform_repository.select(1)
-    run_gs_api(google_ads, "read")
+    run_gs_api(google_ads, "read", account)
     return redirect(f"/accounts/{account_id}/connections/google-sheets")
 
 
 @connections_blueprint.route("/accounts/<account_id>/connections/google-sheets/export")
 def export_data(account_id):
+    account = account_repository.select(account_id)
     google_ads = platform_repository.select(1)
-    run_gs_api(google_ads, "write")
+    run_gs_api(google_ads, "write", account)
     return redirect(f"/accounts/{account_id}/connections/google-sheets")
 
 

@@ -11,7 +11,7 @@
 {% block main %}
 <div class="buttons">
     <a href="https://docs.google.com/spreadsheets/d/{{ spreadsheet_id }}/edit" class="button">Google Sheet</a>
-    <a href="/accounts/connections/google-sheets/import" class="button">Import Data</a>
-    <a href="/accounts/connections/google-sheets/export" class="button">Export Data</a>
+    <a href="/accounts/{{ account.id }}/connections/google-sheets/import" class="button">Import Data</a>
+    <a href="/accounts/{{ account.id }}/connections/google-sheets/export" class="button">Export Data</a>
 </div>
 {% endblock %}

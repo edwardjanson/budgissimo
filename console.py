@@ -42,7 +42,7 @@ currency_repository.save(us_dollar)
 account_budget = Budget(10000.00, 5838.39)
 budget_repository.save(account_budget)
 
-account = Account("Client 1", account_budget, british_pound)
+account = Account("Client 1", account_budget, british_pound, "1WpWbclQPMMG_h2oP5CvV8TcPI2ae8-EF544yX2LmB-Q")
 account_repository.save(account)
 
 # ---------------------- Platforms ---------------------- #

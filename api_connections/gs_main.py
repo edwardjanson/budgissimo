@@ -3,34 +3,29 @@ from __future__ import print_function
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.oauth2 import service_account
-from api_connections.api_helpers import read_sheet, write_sheet, data_by_rows
-import repositories.platform_repository as platform_repository
-import repositories.campaign_repository as campaign_repository
+from api_connections.api_helpers import read_sheet, write_sheet
 
 import os
 
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive']
+SCOPES = ["https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 
-# The ID and range of a sample spreadsheet.
-SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
-RANGE_NAME = 'Sheet1!A:G'
-SERVICE_ACCOUNT_FILE = 'api_connections/service_account.json'
+SERVICE_ACCOUNT_FILE = "api_connections/service_account.json"
 
 
-def run_gs_api(platform, request):
+def run_gs_api(platform, request, account):
+    RANGE_NAME = f"{platform.name}!A:G"
+    SPREADSHEET_ID = account.spreadsheet_id
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
     try:
-        service = build('sheets', 'v4', credentials=credentials)
+        service = build("sheets", "v4", credentials=credentials)
 
         if request == "read":
             read_sheet(service, SPREADSHEET_ID, RANGE_NAME, platform)
         elif request == "write":
-            platform_data = data_by_rows(platform)
-            write_sheet(service, SPREADSHEET_ID, RANGE_NAME, platform_data)
+            write_sheet(service, SPREADSHEET_ID, RANGE_NAME, platform)
 
     except HttpError as err:
         print(err)
