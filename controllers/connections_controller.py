@@ -13,13 +13,11 @@ from api_connections.gs_main import run_gs_api
 
 connections_blueprint = Blueprint("connections", __name__)
 
-SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
-
 
 @connections_blueprint.route("/accounts/<account_id>/connections/google-sheets")
 def google_sheets(account_id):
     account = account_repository.select(account_id)
-    return render_template("accounts/connections/gs_data.html", spreadsheet_id=SPREADSHEET_ID, account=account)
+    return render_template("accounts/connections/gs_data.html", spreadsheet_id=account.spreadsheet_id, account=account) # type: ignore
 
 
 @connections_blueprint.route("/accounts/<account_id>/connections/google-sheets/import")
