@@ -5,7 +5,7 @@
 * [Features](#features)
 * [Background](#background)
 * [Installation](#installation)
-* [What's next](#what-s-next)
+* [What's next](#whats-next)
 
 <br>
 
