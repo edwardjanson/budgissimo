@@ -25,7 +25,7 @@ This mobile first app allows users to keep track of their online advertising bud
 - promotion e.g. 'Christmas Offer'
 - and more.
 
-With tags, budget and spend can be viewed across multiple platforms can be viewed in a single table.
+With tags, budget and spend can be viewed across multiple platforms in a single table.
 
 Due to the need to update budgets and spend manually, I am in the process of integrating a solution using the Google Sheets API. For more details, please view the [What's next](#whats-next) section.
 
