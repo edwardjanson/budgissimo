@@ -6,6 +6,7 @@
 * [Background](#background)
 * [Installation](#installation)
 * [What's next](#whats-next)
+* [Images](#images)
 
 <br>
 
@@ -54,3 +55,15 @@ flask run
 - Integrating the Google Sheets API to allow users to update campaign data in Budgissimo by pasting CSV exports from platforms into a  Google Sheet.
 - Investigate the possibility of using the Google Ads API to pull data directly from the platform to Budgissimo.
 - Integrate DataTables for additional table features e.g., filtering and paging.
+
+<br>
+
+## Images
+
+#### Tags Page
+![All tags page](./static/images/tags.png)
+
+<br>
+
+#### Platforms Edit Page
+![platform edit page](./static/images/edit-platforms.png)
