@@ -5,7 +5,6 @@
 * [Features](#features)
 * [Background](#background)
 * [Installation](#installation)
-* [What's next](#whats-next)
 * [Images](#images)
 
 <br>
@@ -28,8 +27,6 @@ This mobile first app allows users to keep track of their online advertising bud
 
 With tags, budget and spend can be viewed across multiple platforms in a single table.
 
-Due to the need to update budgets and spend manually, I am in the process of integrating a solution using the Google Sheets API. For more details, please view the [What's next](#whats-next) section.
-
 <br>
 
 ## Installation
@@ -47,14 +44,6 @@ To run the app:
 ```
 flask run
 ```
-
-<br>
-
-## What's next
-
-- Integrating the Google Sheets API to allow users to update campaign data in Budgissimo by pasting CSV exports from platforms into a  Google Sheet.
-- Investigate the possibility of using the Google Ads API to pull data directly from the platform to Budgissimo.
-- Integrate DataTables for additional table features e.g., filtering and paging.
 
 <br>
 
